@@ -91,6 +91,10 @@
     box-shadow:var(--shadow-sm);
     display:flex; align-items:center; justify-content:space-between;
     padding:.55rem 1.4rem; gap:1rem; flex-wrap:wrap;
+    /* Correctif artefact : promotion du topbar sur sa propre couche GPU —
+       évite le trait clair qui clignote au bord pendant le défilement
+       (recalcul du backdrop-filter à chaque frame). */
+    transform:translateZ(0);
   }
   .brand{display:flex; align-items:center; gap:.6rem; font-weight:700; font-size:.95rem}
   .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:var(--dot-glow);display:inline-block}
@@ -410,6 +414,7 @@
     position:absolute; bottom:0; left:0; right:0; height:3px;
     background:var(--progress-grad); transform-origin:0 50%; transform:scaleX(0);
     pointer-events:none; box-shadow:var(--progress-glow);
+    will-change:transform; /* couche GPU dédiée : le flou du topbar ne se recalcule pas à chaque frame */
   }
 
   /* ---------- Print ---------- */
@@ -896,7 +901,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.10 (filament de progression sur le bord du topbar : doré-braise en jour, arc-en-ciel en nuit)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.11 (correctif trait clair parasite au défilement : couches GPU dédiées)</p>
   </footer>
 </div>
 
@@ -1326,7 +1331,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.10 (progress filament on the topbar edge: gold-ember in day, rainbow in night)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.11 (fix for stray light streak while scrolling: dedicated GPU layers)</p>
   </footer>
 </div>
 
