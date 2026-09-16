@@ -326,6 +326,16 @@
     body.lang-en pre.copied::after{content:"✓ Copied"}
     pre.copied::after{opacity:1}
 
+    /* Cellules copiables : les valeurs des tableaux (imports, récap, pointeurs)
+       se copient une par une — pratique pour les saisir au fur et à mesure
+       dans UAssetGUI. Feedback : fond accent + coche ✓ éphémère. */
+    td.mono{position:relative; cursor:copy}
+    td.mono.copied{background:var(--accent-soft)}
+    td.mono.copied::after{
+      content:"✓"; position:absolute; top:.1rem; right:.25rem;
+      font-size:.68rem; font-weight:800; color:var(--tip-ink);
+    }
+
     /* Sommaire vivant : la section en cours de lecture s'illumine */
     .toc a{transition:color .2s ease}
     .toc a.active{color:var(--accent); font-weight:700; border-color:var(--accent)}
@@ -405,6 +415,9 @@
     pre, table{break-inside:avoid}
     a{color:inherit; text-decoration:none}
     .toc, #progress{display:none}
+    /* Impression depuis le thème nuit : les schémas reprennent un fond clair
+       (sinon fond sombre + textes sombres réinitialisés = illisible en PDF). */
+    body.night figure svg{background:#fff}
     .hero::before{background:var(--accent)}
     /* Palette claire forcée : le thème actif ne doit pas suivre à l'impression
        (les variables de thème sont posées sur body.day/body.night : le reset
@@ -873,7 +886,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.6 (schémas sombres en nuit, correctif boîte noire, mode révision retiré)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.7 (cellules des tableaux copiables, correctif impression PDF en thème nuit)</p>
   </footer>
 </div>
 
@@ -1303,7 +1316,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.6 (dark diagrams in night, black box fix, review mode removed)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.7 (copyable table cells, night-theme PDF print fix)</p>
   </footer>
 </div>
 
@@ -1353,9 +1366,10 @@
 
   /* ---- v2.5 ---- */
 
-  /* Copier en un clic : chaque bloc de commande se copie dans le presse-papier,
-     avec un badge « ✓ Copié » qui s'affiche un instant (pseudo-élément ::after). */
-  var pres = document.querySelectorAll('pre');
+  /* Copier en un clic : chaque bloc de commande ET chaque cellule de donnée
+     (td.mono : ClassName, OuterIndex, ObjectName, valeurs…) se copie dans le
+     presse-papier, avec un badge « ✓ Copié » qui s'affiche un instant. */
+  var pres = document.querySelectorAll('pre, td.mono');
   for (var pi = 0; pi < pres.length; pi++){
     pres[pi].addEventListener('click', function(){
       var el = this;
