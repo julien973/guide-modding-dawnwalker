@@ -22,6 +22,7 @@
     --fieldrow-bg:var(--row-even); --inline-bg:rgba(90,70,40,.08);
     --svg-ink:#1c1917; --svg-sub:#a8a29e; --svg-box:#f5f5f4; --svg-boxline:#d6d3d1; --svg-sep:#e7e5e4; --svg-accbox:#fdf1f1; --svg-accline:#e7b6b9;
     --text-glow:rgba(179,69,62,.28); --halo:0 0 26px rgba(179,69,62,.14);
+    --progress-grad:linear-gradient(90deg,#fbbf24,#d97706,#b3453e); --progress-glow:0 0 10px rgba(217,119,6,.55);
     --shadow-sm:0 1px 2px rgba(28,25,23,.05), 0 4px 14px rgba(28,25,23,.06);
     --shadow-md:0 2px 6px rgba(28,25,23,.06), 0 16px 40px rgba(28,25,23,.12);
     --code-bg:#1c1917; --code-ink:#f5f5f4; --code-accent:#fca5a5;
@@ -51,6 +52,7 @@
     --fieldrow-bg:var(--row-even); --inline-bg:rgba(255,255,255,.12);
     --svg-ink:#f5e8e0; --svg-sub:#b8a6c9; --svg-box:rgba(255,255,255,.08); --svg-boxline:rgba(255,255,255,.22); --svg-sep:rgba(255,255,255,.16); --svg-accbox:rgba(240,97,146,.14); --svg-accline:rgba(240,97,146,.45);
     --text-glow:rgba(244,114,182,.42); --halo:0 0 30px rgba(240,97,146,.24);
+    --progress-grad:linear-gradient(90deg,#f06192,#fbbf24,#4ade80,#38bdf8,#a78bfa); --progress-glow:0 0 12px rgba(240,97,146,.6);
     --shadow-sm:0 1px 2px rgba(10,3,5,.2), 0 4px 14px rgba(10,3,5,.25);
     --shadow-md:0 2px 6px rgba(10,3,5,.25), 0 16px 40px rgba(10,3,5,.4);
     --code-bg:rgba(17,12,26,.9); --code-ink:#eadfd9; --code-accent:#fca5a5;
@@ -401,11 +403,13 @@
     }
   }
 
-  /* ---------- Barre de progression de lecture (filament lumineux) ---------- */
+  /* ---------- Barre de progression (filament posé sur le bord du topbar) ----------
+     Vivante dans le topbar : position:absolute dans le header sticky, elle
+     reste posée sur le bord inférieur quelle que soit la hauteur du topbar. */
   #progress{
-    position:fixed; top:0; left:0; right:0; height:3px; z-index:100;
-    background:var(--hero-bar); transform-origin:0 50%; transform:scaleX(0);
-    pointer-events:none; box-shadow:0 0 12px var(--dot-glow);
+    position:absolute; bottom:0; left:0; right:0; height:3px;
+    background:var(--progress-grad); transform-origin:0 50%; transform:scaleX(0);
+    pointer-events:none; box-shadow:var(--progress-glow);
   }
 
   /* ---------- Print ---------- */
@@ -445,7 +449,6 @@
 
 <div class="ambient a-rose"></div>
 <div class="ambient a-mauve"></div>
-<div id="progress"></div>
 
 <header class="topbar">
   <div class="brand"><span class="dot"></span> Guide Modding <small>· UE 5.5 · The Blood of Dawnwalker</small></div>
@@ -457,6 +460,7 @@
     </div>
     <button class="btn btn-primary" id="btn-print" data-fr="Imprimer · PDF" data-en="Print · PDF">Imprimer · PDF</button>
   </div>
+  <div id="progress"></div>
 </header>
 
 <main>
@@ -892,7 +896,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.9 (barre de progression réparée : elle était masquée par le topbar)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.10 (filament de progression sur le bord du topbar : doré-braise en jour, arc-en-ciel en nuit)</p>
   </footer>
 </div>
 
@@ -1322,7 +1326,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.9 (progress bar fixed: it was hidden behind the topbar)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.10 (progress filament on the topbar edge: gold-ember in day, rainbow in night)</p>
   </footer>
 </div>
 
