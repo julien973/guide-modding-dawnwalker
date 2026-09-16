@@ -6,7 +6,7 @@
 <title>Guide Ultime — Modding d'Arme UE 5.5 · The Blood of Dawnwalker</title>
 <style>
   :root{
-    --bg:#faf9f7; --surface:#ffffff; --ink:#1c1917; --muted:#78716c;
+    --bg:#f6efe9; --surface:#ffffff; --ink:#1c1917; --muted:#78716c;
     --accent:#b3222c; --accent-soft:#fdf1f1; --accent-ink:#8f1a22;
     --border:#e7e5e4; --border-strong:#d6d3d1;
     --code-bg:#1c1917; --code-ink:#f5f5f4; --code-accent:#fca5a5;
@@ -17,7 +17,12 @@
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    margin:0; background:var(--bg); color:var(--ink);
+    margin:0;
+    background:
+      radial-gradient(1100px 480px at 50% -120px, rgba(179,34,44,.08), transparent 70%),
+      linear-gradient(180deg, #f8f2ec 0%, #f6efe9 40%, #f3eae2 100%);
+    background-attachment:fixed;
+    color:var(--ink);
     font-family:"Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
     line-height:1.65; font-size:16px;
   }
@@ -26,7 +31,7 @@
   /* ---------- Topbar ---------- */
   .topbar{
     position:sticky; top:0; z-index:60;
-    background:rgba(250,249,247,.92); backdrop-filter:blur(10px);
+    background:rgba(246,239,233,.92); backdrop-filter:blur(10px);
     border-bottom:1px solid var(--border);
     display:flex; align-items:center; justify-content:space-between;
     padding:.55rem 1.4rem; gap:1rem; flex-wrap:wrap;
@@ -140,7 +145,7 @@
     font-size:.75rem; text-transform:uppercase; letter-spacing:.06em;
   }
   td{padding:.6rem .8rem; border-top:1px solid var(--border); vertical-align:top}
-  tbody tr:nth-child(even){background:#faf9f8}
+  tbody tr:nth-child(even){background:#faf5ef}
   td.mono, th.mono{font-family:Consolas, monospace; font-size:.83rem}
   .pill{
     display:inline-block; padding:.1rem .55rem; border-radius:999px;
@@ -172,7 +177,7 @@
     display:inline-flex; align-items:center; justify-content:center;
     font-size:.8rem; font-weight:800; flex:0 0 auto;
   }
-  .fieldrow{display:flex; gap:.5rem; flex-wrap:wrap; margin:.5rem 0; padding:.4rem .6rem; background:#faf9f8; border-radius:8px}
+  .fieldrow{display:flex; gap:.5rem; flex-wrap:wrap; margin:.5rem 0; padding:.4rem .6rem; background:#faf5ef; border-radius:8px}
   .fieldrow .k{font-family:Consolas, monospace; font-size:.82rem; color:var(--muted); min-width:5.5rem}
   .fieldrow .v{font-family:Consolas, monospace; font-size:.85rem; font-weight:600}
   .fieldrow .v.acc{color:var(--accent-ink)}
@@ -648,7 +653,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v1.1 (robocopy)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v1.2 (robocopy, fond parchemin)</p>
   </footer>
 </div>
 
@@ -1064,7 +1069,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v1.1 (robocopy)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v1.2 (robocopy, parchment background)</p>
   </footer>
 </div>
 
