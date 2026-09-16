@@ -20,6 +20,8 @@
     --row-even:rgba(166,138,105,.08); --row-hover:rgba(166,138,105,.15);
     --quick-grad:linear-gradient(180deg, rgba(255,255,255,calc(var(--surface-alpha) + .05)), rgba(255,255,255,calc(var(--surface-alpha) - .06)));
     --fieldrow-bg:var(--row-even); --inline-bg:rgba(90,70,40,.08);
+    --svg-ink:#1c1917; --svg-sub:#a8a29e; --svg-box:#f5f5f4; --svg-boxline:#d6d3d1; --svg-sep:#e7e5e4; --svg-accbox:#fdf1f1; --svg-accline:#e7b6b9;
+    --text-glow:rgba(179,69,62,.28); --halo:0 0 26px rgba(179,69,62,.14);
     --shadow-sm:0 1px 2px rgba(28,25,23,.05), 0 4px 14px rgba(28,25,23,.06);
     --shadow-md:0 2px 6px rgba(28,25,23,.06), 0 16px 40px rgba(28,25,23,.12);
     --code-bg:#1c1917; --code-ink:#f5f5f4; --code-accent:#fca5a5;
@@ -47,6 +49,8 @@
     --row-even:rgba(255,255,255,.05); --row-hover:rgba(255,255,255,.1);
     --quick-grad:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
     --fieldrow-bg:var(--row-even); --inline-bg:rgba(255,255,255,.12);
+    --svg-ink:#f5e8e0; --svg-sub:#b8a6c9; --svg-box:rgba(255,255,255,.08); --svg-boxline:rgba(255,255,255,.22); --svg-sep:rgba(255,255,255,.16); --svg-accbox:rgba(240,97,146,.14); --svg-accline:rgba(240,97,146,.45);
+    --text-glow:rgba(244,114,182,.42); --halo:0 0 30px rgba(240,97,146,.24);
     --shadow-sm:0 1px 2px rgba(10,3,5,.2), 0 4px 14px rgba(10,3,5,.25);
     --shadow-md:0 2px 6px rgba(10,3,5,.25), 0 16px 40px rgba(10,3,5,.4);
     --code-bg:rgba(255,255,255,.08); --code-ink:#eadfd9; --code-accent:#fca5a5;
@@ -241,9 +245,21 @@
   /* ---------- Figures ---------- */
   figure{margin:1.6rem 0}
   figure svg{width:100%; height:auto; display:block; background:var(--surface); border:1px solid var(--panel-border); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm)}
-  /* Annotations SVG : la couleur grise codée en dur suit le thème (CSS écrase l'attribut fill) */
+  /* Schémas SVG adaptatifs : le CSS écrase les attributs fill/stroke codés en dur —
+     chaque couleur d'origine est redirigée vers une variable de thème.
+     Jour = valeurs d'origine ; nuit = encre claire, boîtes translucides, accents roses. */
+  figure svg [fill="#1c1917"]{fill:var(--svg-ink)}
   figure svg [fill="#78716c"]{fill:var(--muted)}
+  figure svg [fill="#a8a29e"]{fill:var(--svg-sub)}
+  figure svg [fill="#f5f5f4"]{fill:var(--svg-box)}
+  figure svg [fill="#fdf1f1"]{fill:var(--svg-accbox)}
+  figure svg [fill="#8f1a22"]{fill:var(--accent-ink)}
   figure svg [stroke="#78716c"]{stroke:var(--muted)}
+  figure svg [stroke="#d6d3d1"]{stroke:var(--svg-boxline)}
+  figure svg [stroke="#e7e5e4"]{stroke:var(--svg-sep)}
+  figure svg [stroke="#e7b6b9"]{stroke:var(--svg-accline)}
+  figure svg [stroke="#b3222c"]{stroke:var(--accent)}
+  figure svg marker path[fill="#b3222c"]{fill:var(--accent)}
   figcaption{font-size:.82rem; color:var(--muted); text-align:center; margin-top:.5rem}
 
   /* ---------- Checklist ---------- */
@@ -270,6 +286,19 @@
       backdrop-filter:blur(12px) saturate(1.35);
       -webkit-backdrop-filter:blur(12px) saturate(1.35);
     }
+
+    /* Exemples vivants : schémas, tableaux et blocs de commande réagissent au survol
+       (soulèvement léger + halo lumineux + bordure accent) */
+    figure svg, table, pre{transition:box-shadow .25s ease, border-color .25s ease, transform .25s ease}
+    figure svg:hover, table:hover, pre:hover{
+      border-color:var(--accent); box-shadow:var(--shadow-md), var(--halo); transform:translateY(-2px);
+    }
+
+    /* Glow de lisibilité : le texte s'illumine doucement sous le curseur
+       (jour : lueur braise ; nuit : lueur rose) */
+    p, li, td, th, figcaption, .formula, .fieldrow .k, .fieldrow .v{transition:text-shadow .18s ease}
+    p:hover, li:hover, td:hover, th:hover, figcaption:hover, .formula:hover,
+    .fieldrow:hover .k, .fieldrow:hover .v{text-shadow:0 0 12px var(--text-glow)}
 
     /* Sépia vivant : deux couches de teinte dont l'opacité est pilotée
        par la position de scroll (CSS natif 2026, zéro JavaScript).
@@ -334,6 +363,7 @@
       --border:#ece4da; --border-strong:#ddd2c4; --code-bg:#1c1917; --code-ink:#f5f5f4;
       --th-bg:#292524; --th-ink:#fafaf9; --row-even:#faf5ef; --row-hover:#fdf8f2;
       --quick-grad:linear-gradient(180deg,#fff,#fdf6f1); --fieldrow-bg:#faf5ef;
+      --svg-ink:#1c1917; --svg-sub:#a8a29e; --svg-box:#f5f5f4; --svg-boxline:#d6d3d1; --svg-sep:#e7e5e4; --svg-accbox:#fdf1f1; --svg-accline:#e7b6b9;
       --inline-bg:#f0eeec; --accent:#b3222c; --accent-soft:#fdf1f1; --accent-ink:#8f1a22;
       --stepnum-bg:#1c1917;
       --info-bg:#eff6ff; --info-ink:#1e40af; --info-border:#3b82f6;
@@ -407,6 +437,7 @@
     <h2><span class="num">1</span> Vue d'ensemble & mécanique interne</h2>
 
     <h3><span class="tag">A.</span> Le fonctionnement des effets (Gameplay Effect)</h3>
+    <div class="card">
     <p>Les statistiques et bonus des armes sont régis par le <strong>Gameplay Ability System (GAS)</strong> d'Unreal Engine :</p>
     <ul>
       <li>L'asset d'arme expose un tableau de structures nommé <code class="inline">CustomEffectParameters</code>.</li>
@@ -416,8 +447,10 @@
       <p class="callout-title">📐 Correspondance valeur interne → bonus en jeu</p>
       <p><code>0.409</code> correspond au multiplicateur additif de <strong>+90 %</strong> en jeu. Autres valeurs observées sur cet asset : <code>0.227</code> → +50 %, <code>-0.364</code> → −80 %.</p>
     </div>
+    </div>
 
     <h3><span class="tag">B.</span> Comprendre le <code class="inline">FPackageIndex</code> (champ <code class="inline">Variant</code> dans UAssetGUI)</h3>
+    <div class="card">
     <p>Dans UAssetGUI, une <code class="inline">ObjectProperty</code> (comme le champ <code class="inline">Effect</code>) ne stocke pas le nom de la classe en texte brut. Elle utilise un <strong><code class="inline">FPackageIndex</code></strong> :</p>
     <ul>
       <li><code>0</code> : référence nulle (<em>null</em>).</li>
@@ -496,8 +529,10 @@
         <tr class="highlight"><td class="mono">-23</td><td class="mono">Import #22 — Classe GE_DamageAgainstAnimalsMultiplier_C</td><td><strong>Effect de l'index 5 (Animaux)</strong></td></tr>
       </tbody>
     </table>
+    </div>
 
     <h3><span class="tag">C.</span> Le format conteneur UE5 (Zen / IoStore)</h3>
+    <div class="card">
     <p>UE5.5 utilise le conteneur IoStore composé de trois fichiers indissociables :</p>
     <ol>
       <li><code class="inline">.utoc</code> — Table des matières / catalogue des chunks.</li>
@@ -538,11 +573,13 @@
       </svg>
       <figcaption>Pipeline complet : arborescence legacy → conversion retoc → conteneur IoStore → dossier de mods du jeu.</figcaption>
     </figure>
+    </div>
   </section>
 
   <!-- ============ SECTION 2 ============ -->
   <section class="section" id="s2-fr">
     <h2><span class="num">2</span> Tableau récapitulatif des statistiques</h2>
+    <div class="card">
     <p>État final visé du tableau <code class="inline">CustomEffectParameters</code> après modification :</p>
     <table>
       <thead>
@@ -561,6 +598,7 @@
       <p class="callout-title">📌 Note technique</p>
       <p>Dans les fichiers internes du jeu, la catégorie des humains/mortels est nommée <strong><code>Untouched</code></strong>. N'utilise jamais de nom inventé comme <code>DamageVsMortals</code>.</p>
     </div>
+    </div>
   </section>
 
   <!-- ============ SECTION 3 ============ -->
@@ -578,6 +616,7 @@
     </div>
 
     <h3>Structure stricte des dossiers</h3>
+    <div class="card">
     <p>L'arborescence doit <strong>impérativement</strong> reproduire le chemin interne du jeu à partir d'un dossier racine (ex. <code class="inline">dossier_mod_legacy</code>) :</p>
     <pre><code>dossier_mod_legacy\
 └── Dawnwalker\
@@ -589,6 +628,7 @@
     <div class="callout warn">
       <p class="callout-title">⚠️ Règle d'or</p>
       <p>Un seul niveau de dossier en trop ou en moins et le jeu ne trouvera pas l'asset remplacé : le chemin doit refléter <em>exactement</em> la structure interne du pak d'origine.</p>
+    </div>
     </div>
   </section>
 
@@ -782,7 +822,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.3 (lisibilité nuit, sections 5-6 en cartes)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.4 (tout en cartes, schémas adaptatifs, exemples dynamiques, glow au survol)</p>
   </footer>
 </div>
 
@@ -832,6 +872,7 @@
     <h2><span class="num">1</span> Overview &amp; internal mechanics</h2>
 
     <h3><span class="tag">A.</span> How effects work (Gameplay Effect)</h3>
+    <div class="card">
     <p>Weapon stats and bonuses are governed by Unreal Engine's <strong>Gameplay Ability System (GAS)</strong>:</p>
     <ul>
       <li>The weapon asset exposes an array of structs named <code class="inline">CustomEffectParameters</code>.</li>
@@ -841,8 +882,10 @@
       <p class="callout-title">📐 Internal value → in-game bonus mapping</p>
       <p><code>0.409</code> corresponds to the additive multiplier of <strong>+90 %</strong> in game. Other values observed in this asset: <code>0.227</code> → +50 %, <code>-0.364</code> → −80 %.</p>
     </div>
+    </div>
 
     <h3><span class="tag">B.</span> Understanding <code class="inline">FPackageIndex</code> (the <code class="inline">Variant</code> field in UAssetGUI)</h3>
+    <div class="card">
     <p>In UAssetGUI, an <code class="inline">ObjectProperty</code> (such as the <code class="inline">Effect</code> field) does not store the class name as plain text. It uses an <strong><code class="inline">FPackageIndex</code></strong>:</p>
     <ul>
       <li><code>0</code>: null reference (<em>null</em>).</li>
@@ -916,8 +959,10 @@
         <tr class="highlight"><td class="mono">-23</td><td class="mono">Import #22 — Class GE_DamageAgainstAnimalsMultiplier_C</td><td><strong>Effect of index 5 (Animals)</strong></td></tr>
       </tbody>
     </table>
+    </div>
 
     <h3><span class="tag">C.</span> The UE5 container format (Zen / IoStore)</h3>
+    <div class="card">
     <p>UE5.5 uses the IoStore container made of three inseparable files:</p>
     <ol>
       <li><code class="inline">.utoc</code> — Table of contents / chunk catalog.</li>
@@ -958,11 +1003,13 @@
       </svg>
       <figcaption>Full pipeline: legacy tree → retoc conversion → IoStore container → game mods folder.</figcaption>
     </figure>
+    </div>
   </section>
 
   <!-- ============ SECTION 2 ============ -->
   <section class="section" id="s2-en">
     <h2><span class="num">2</span> Statistics summary table</h2>
+    <div class="card">
     <p>Target final state of the <code class="inline">CustomEffectParameters</code> array after modification:</p>
     <table>
       <thead>
@@ -981,6 +1028,7 @@
       <p class="callout-title">📌 Technical note</p>
       <p>In the game's internal files, the humans/mortals category is named <strong><code>Untouched</code></strong>. Never use an invented name such as <code>DamageVsMortals</code>.</p>
     </div>
+    </div>
   </section>
 
   <!-- ============ SECTION 3 ============ -->
@@ -998,6 +1046,7 @@
     </div>
 
     <h3>Strict folder structure</h3>
+    <div class="card">
     <p>The tree <strong>must</strong> reproduce the game's internal path from a root folder (e.g. <code class="inline">dossier_mod_legacy</code>):</p>
     <pre><code>dossier_mod_legacy\
 └── Dawnwalker\
@@ -1009,6 +1058,7 @@
     <div class="callout warn">
       <p class="callout-title">⚠️ Golden rule</p>
       <p>One folder level too many or too few and the game will not find the replaced asset: the path must reflect <em>exactly</em> the internal structure of the original pak.</p>
+    </div>
     </div>
   </section>
 
@@ -1202,7 +1252,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.3 (night readability, sections 5-6 carded)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.4 (everything carded, adaptive diagrams, dynamic examples, hover glow)</p>
   </footer>
 </div>
 
