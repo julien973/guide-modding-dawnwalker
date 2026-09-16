@@ -7,32 +7,67 @@
 <title>Guide Ultime — Modding d'Arme UE 5.5 · The Blood of Dawnwalker</title>
 <style>
   :root{
+    --radius:16px; --radius-sm:12px;
+  }
+  /* ---------- Thème JOUR · sépia vivant (dérive de teinte au scroll) ---------- */
+  body.day{
+    --surface:rgba(255,255,255,.62); --ink:#2f2822; --muted:#7c6f5f;
+    --accent:#b3453e; --accent-soft:rgba(179,69,62,.1); --accent-ink:#8f3a34;
+    --border:#e6dbc8; --border-strong:#d8c9b0;
+    --panel-border:rgba(255,255,255,.75); --neutral-bg:rgba(255,255,255,.55);
+    --th-bg:#3a322c; --th-ink:#faf6ef; --stepnum-bg:#b3453e;
+    --row-even:rgba(255,255,255,.4); --row-hover:rgba(255,255,255,.65);
+    --quick-grad:linear-gradient(180deg, rgba(255,255,255,.66), rgba(253,246,241,.55));
+    --fieldrow-bg:rgba(255,255,255,.4); --inline-bg:rgba(90,70,40,.08);
+    --shadow-sm:0 1px 2px rgba(28,25,23,.05), 0 4px 14px rgba(28,25,23,.06);
+    --shadow-md:0 2px 6px rgba(28,25,23,.06), 0 16px 40px rgba(28,25,23,.12);
+    --code-bg:#1c1917; --code-ink:#f5f5f4; --code-accent:#fca5a5;
+    --info-bg:#eff6ff; --info-ink:#1e40af; --info-border:#3b82f6;
+    --warn-bg:#fff7ed; --warn-ink:#9a3412; --warn-border:#f97316;
+    --tip-bg:#f0fdf4; --tip-ink:#166534; --tip-border:#22c55e;
+    --topbar-bg:rgba(247,240,230,.72); --topbar-border:rgba(221,210,196,.6);
+    --grad-accent:linear-gradient(135deg, #b3453e, #9d6b3f);
+    --hero-bar:linear-gradient(90deg, #b3453e, #9d6b3f);
+    --dot-glow:0 0 10px rgba(179,69,62,.5);
+    color:var(--ink);
+    background:
+      radial-gradient(900px 500px at 85% -5%, rgba(245,158,11,.13), transparent 60%),
+      radial-gradient(700px 420px at 10% 20%, rgba(179,34,44,.07), transparent 62%),
+      linear-gradient(180deg, #f7f0e6 0%, #f3e9db 100%);
+    background-attachment:fixed;
+  }
+  /* ---------- Thème NUIT · glassmorphism sombre constant ---------- */
+  body.night{
     --bg:#241a33; --surface:rgba(255,255,255,.16); --ink:#faf3ee; --muted:#c9b8d4;
     --accent:#f06192; --accent-soft:rgba(240,97,146,.18); --accent-ink:#f8a5c0;
     --border:rgba(235,225,255,.18); --border-strong:rgba(235,225,255,.3);
-    --radius:16px; --radius-sm:12px;
-    --panel-border:rgba(255,255,255,.28);
-    --th-bg:rgba(18,13,28,.55); --th-ink:#f5e8e0;
+    --panel-border:rgba(255,255,255,.28); --neutral-bg:rgba(255,255,255,.08);
+    --th-bg:rgba(18,13,28,.55); --th-ink:#f5e8e0; --stepnum-bg:var(--accent);
     --row-even:rgba(255,255,255,.05); --row-hover:rgba(255,255,255,.1);
     --quick-grad:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
-    --fieldrow-bg:rgba(255,255,255,.07); --inline-bg:rgba(255,255,255,.12); --stepnum-bg:var(--accent);
+    --fieldrow-bg:rgba(255,255,255,.07); --inline-bg:rgba(255,255,255,.12);
     --shadow-sm:0 1px 2px rgba(10,3,5,.2), 0 4px 14px rgba(10,3,5,.25);
     --shadow-md:0 2px 6px rgba(10,3,5,.25), 0 16px 40px rgba(10,3,5,.4);
     --code-bg:rgba(255,255,255,.08); --code-ink:#eadfd9; --code-accent:#fca5a5;
     --info-bg:rgba(59,130,246,.16); --info-ink:#93c5fd; --info-border:#3b82f6;
     --warn-bg:rgba(249,115,22,.16); --warn-ink:#fdba74; --warn-border:#f97316;
     --tip-bg:rgba(34,197,94,.16); --tip-ink:#86efac; --tip-border:#22c55e;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth; scroll-padding-top:72px}
-  body{
-    margin:0;
+    --topbar-bg:rgba(28,20,38,.74); --topbar-border:rgba(235,225,255,.16);
+    --grad-accent:linear-gradient(135deg, #f06192, #9d00ff);
+    --hero-bar:linear-gradient(90deg, #f06192, #9d00ff);
+    --dot-glow:0 0 10px rgba(244,114,182,.9);
+    color:var(--ink);
     background:
       radial-gradient(900px 520px at 12% -8%, rgba(157,0,255,.28), transparent 62%),
       radial-gradient(760px 480px at 88% 12%, rgba(255,45,117,.2), transparent 62%),
       radial-gradient(680px 460px at 50% 108%, rgba(0,194,255,.14), transparent 65%),
       linear-gradient(180deg, #2b2140 0%, #241a33 55%, #1e1629 100%);
     background-attachment:fixed;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth; scroll-padding-top:72px}
+  body{
+    margin:0;
     color:var(--ink);
     font-family:"Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
     line-height:1.65; font-size:16px;
@@ -43,15 +78,15 @@
   /* ---------- Topbar ---------- */
   .topbar{
     position:sticky; top:0; z-index:60;
-    background:rgba(28,20,38,.74); backdrop-filter:blur(16px) saturate(1.5);
+    background:var(--topbar-bg); backdrop-filter:blur(16px) saturate(1.5);
     -webkit-backdrop-filter:blur(16px) saturate(1.5);
-    border-bottom:1px solid rgba(235,225,255,.16);
+    border-bottom:1px solid var(--topbar-border);
     box-shadow:var(--shadow-sm);
     display:flex; align-items:center; justify-content:space-between;
     padding:.55rem 1.4rem; gap:1rem; flex-wrap:wrap;
   }
   .brand{display:flex; align-items:center; gap:.6rem; font-weight:700; font-size:.95rem}
-  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px rgba(244,114,182,.9);display:inline-block}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:var(--dot-glow);display:inline-block}
   .brand small{color:var(--muted); font-weight:500}
   .actions{display:flex; align-items:center; gap:.5rem}
   .btn{
@@ -72,7 +107,7 @@
   .btn-primary:hover{background:var(--accent-ink); color:#fff}
 
   /* ---------- Layout ---------- */
-  main{max-width:920px; margin:0 auto; padding:0 1.4rem 0}
+  main{max-width:920px; margin:0 auto; padding:0 1.4rem 0; position:relative; z-index:1}
   .content{padding-top:2.2rem}
 
   /* ---------- Hero ---------- */
@@ -83,7 +118,7 @@
   }
   .hero::before{
     content:""; position:absolute; top:0; left:0; right:0; height:5px;
-    background:linear-gradient(90deg, var(--accent), #9d00ff);
+    background:var(--hero-bar);
   }
   .hero .kicker{color:var(--accent); font-weight:700; text-transform:uppercase; letter-spacing:.12em; font-size:.75rem; margin:0 0 .5rem}
   .hero h1{margin:0 0 .6rem; font-size:clamp(1.55rem, 4.5vw, 2.1rem); line-height:1.15; letter-spacing:-.025em; text-wrap:balance}
@@ -93,7 +128,7 @@
     background:var(--accent-soft); color:var(--accent-ink); border:1px solid var(--panel-border);
     padding:.25rem .7rem; border-radius:999px; font-size:.78rem; font-weight:600;
   }
-  .badge.neutral{background:rgba(255,255,255,.08); color:var(--muted); border-color:var(--border)}
+  .badge.neutral{background:var(--neutral-bg); color:var(--muted); border-color:var(--border)}
 
   /* ---------- TOC ---------- */
   .toc{
@@ -114,7 +149,7 @@
     padding-bottom:.6rem; border-bottom:2px solid var(--border);
   }
   .section > h2 .num{
-    background:linear-gradient(135deg, #f06192, #9d00ff); color:#fff; font-size:.85rem; font-weight:800;
+    background:var(--grad-accent); color:#fff; font-size:.85rem; font-weight:800;
     width:1.9rem; height:1.9rem; border-radius:8px; display:inline-flex;
     align-items:center; justify-content:center; flex:0 0 auto;
   }
@@ -171,7 +206,7 @@
     font-size:.78rem; font-weight:700; font-family:Consolas, monospace;
   }
   .pill.new{background:var(--accent); color:#fff}
-  .pill.old{background:rgba(255,255,255,.1); color:var(--muted); border:1px solid var(--border)}
+  .pill.old{background:var(--neutral-bg); color:var(--muted); border:1px solid var(--border)}
   tr.highlight td{background:var(--accent-soft)}
   tr.highlight td:first-child{border-left:3px solid var(--accent)}
 
@@ -224,18 +259,46 @@
   body.lang-en .content.fr{display:none}
   body.lang-fr .content.en{display:none}
 
-  /* ---------- Verre dépoli global (glassmorphism sombre constant) ---------- */
+  /* ---------- Verre dépoli global + sépia vivant (thème jour) ---------- */
   @media screen{
     .hero, .toc, .quick, .card, .step, .callout, .formula, pre, figure svg, table{
       backdrop-filter:blur(12px) saturate(1.35);
       -webkit-backdrop-filter:blur(12px) saturate(1.35);
+    }
+
+    /* Sépia vivant : deux couches de teinte dont l'opacité est pilotée
+       par la position de scroll (CSS natif 2026, zéro JavaScript).
+       Fonction continue => aucune couture possible. Jour uniquement. */
+    .ambient{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0}
+    body.day .a-rose{
+      background:
+        radial-gradient(820px 480px at 15% 30%, rgba(240,150,60,.2), transparent 62%),
+        radial-gradient(700px 440px at 85% 60%, rgba(214,110,120,.16), transparent 62%),
+        linear-gradient(180deg, #f6e8dc 0%, #f2ddcd 100%);
+      animation:phase2 linear both;
+      animation-timeline:scroll(root);
+    }
+    body.day .a-mauve{
+      background:
+        radial-gradient(820px 480px at 20% 55%, rgba(157,120,200,.16), transparent 62%),
+        radial-gradient(700px 440px at 80% 85%, rgba(196,140,180,.14), transparent 62%),
+        linear-gradient(180deg, #efe4e4 0%, #e9dcdc 100%);
+      animation:phase3 linear both;
+      animation-timeline:scroll(root);
+    }
+    @keyframes phase2{0%{opacity:0} 30%{opacity:0} 60%{opacity:1} 100%{opacity:1}}
+    @keyframes phase3{0%{opacity:0} 55%{opacity:0} 95%{opacity:1} 100%{opacity:1}}
+    /* Repli : sans animation-timeline, les couches resteraient visibles
+       en fin d'animation temporelle — on les retire, fond sépia statique. */
+    @supports not (animation-timeline: scroll()){
+      .ambient{display:none}
     }
   }
 
   /* ---------- Print ---------- */
   @page{size:A4; margin:13mm}
   @media print{
-    body{background:#fff; font-size:11.5px; color:#1c1917}
+    body, body.day, body.night{background:#fff !important; font-size:11.5px; color:#1c1917}
     *{box-shadow:none !important; backdrop-filter:none !important}
     .topbar{position:static; border-bottom:2px solid #1c1917}
     .actions, .lang-switch, .btn{display:none !important}
@@ -246,8 +309,10 @@
     a{color:inherit; text-decoration:none}
     .toc{display:none}
     .hero::before{background:var(--accent)}
-    /* Palette claire forcée : le thème sombre ne doit pas suivre à l'impression */
-    :root{--ink:#1c1917; --muted:#78716c; --surface:#ffffff; --panel-border:rgba(236,228,218,.8);
+    /* Palette claire forcée : le thème actif ne doit pas suivre à l'impression
+       (les variables de thème sont posées sur body.day/body.night : le reset
+       doit donc cibler les MÊMES sélecteurs pour gagner en cascade) */
+    body.day, body.night{--ink:#1c1917; --muted:#78716c; --surface:#ffffff; --panel-border:rgba(236,228,218,.8);
       --border:#ece4da; --border-strong:#ddd2c4; --code-bg:#1c1917; --code-ink:#f5f5f4;
       --th-bg:#292524; --th-ink:#fafaf9; --row-even:#faf5ef; --row-hover:#fdf8f2;
       --quick-grad:linear-gradient(180deg,#fff,#fdf6f1); --fieldrow-bg:#faf5ef;
@@ -259,11 +324,15 @@
   }
 </style>
 </head>
-<body class="lang-fr">
+<body class="lang-fr day">
+
+<div class="ambient a-rose"></div>
+<div class="ambient a-mauve"></div>
 
 <header class="topbar">
   <div class="brand"><span class="dot"></span> Guide Modding <small>· UE 5.5 · The Blood of Dawnwalker</small></div>
   <div class="actions">
+    <button class="btn" id="btn-theme" title="Thème jour / nuit">🌙</button>
     <div class="lang-switch">
       <button id="btn-fr" class="active">FR</button>
       <button id="btn-en">EN</button>
@@ -691,7 +760,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v1.9 (glassmorphism sombre constant)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.0 (double thème jour/nuit)</p>
   </footer>
 </div>
 
@@ -1107,7 +1176,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v1.9 (constant dark glassmorphism)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.0 (day/night dual theme)</p>
   </footer>
 </div>
 
@@ -1138,6 +1207,22 @@
   setLang(saved);
 
   document.getElementById('btn-print').addEventListener('click', function(){ window.print(); });
+
+  /* Thème jour / nuit : sépia vivant ↔ glassmorphism sombre.
+     Le choix est mémorisé comme la langue. */
+  var btnTheme = document.getElementById('btn-theme');
+  function setTheme(t){
+    document.body.classList.toggle('day', t === 'day');
+    document.body.classList.toggle('night', t === 'night');
+    btnTheme.textContent = (t === 'night') ? '☀️' : '🌙';
+    try { localStorage.setItem('dawnwalker-guide-theme', t); } catch(e){}
+  }
+  btnTheme.addEventListener('click', function(){
+    setTheme(document.body.classList.contains('night') ? 'day' : 'night');
+  });
+  var savedTheme = 'day';
+  try { savedTheme = localStorage.getItem('dawnwalker-guide-theme') || 'day'; } catch(e){}
+  setTheme(savedTheme);
 </script>
 
 </body>
