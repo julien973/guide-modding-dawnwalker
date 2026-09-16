@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -8,14 +9,17 @@
   :root{
     --bg:#f6efe9; --surface:#ffffff; --ink:#1c1917; --muted:#78716c;
     --accent:#b3222c; --accent-soft:#fdf1f1; --accent-ink:#8f1a22;
-    --border:#e7e5e4; --border-strong:#d6d3d1;
+    --border:#ece4da; --border-strong:#ddd2c4;
+    --radius:16px; --radius-sm:12px;
+    --shadow-sm:0 1px 2px rgba(28,25,23,.05), 0 4px 14px rgba(28,25,23,.06);
+    --shadow-md:0 2px 6px rgba(28,25,23,.06), 0 16px 40px rgba(28,25,23,.12);
     --code-bg:#1c1917; --code-ink:#f5f5f4; --code-accent:#fca5a5;
     --info-bg:#eff6ff; --info-ink:#1e40af; --info-border:#3b82f6;
     --warn-bg:#fff7ed; --warn-ink:#9a3412; --warn-border:#f97316;
     --tip-bg:#f0fdf4; --tip-ink:#166534; --tip-border:#22c55e;
   }
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth; scroll-padding-top:72px}
   body{
     margin:0;
     background:
@@ -25,14 +29,17 @@
     color:var(--ink);
     font-family:"Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
     line-height:1.65; font-size:16px;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
   }
   code, pre, .mono{font-family:"Cascadia Code", "SF Mono", Consolas, "Courier New", monospace}
 
   /* ---------- Topbar ---------- */
   .topbar{
     position:sticky; top:0; z-index:60;
-    background:rgba(246,239,233,.92); backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--border);
+    background:rgba(246,239,233,.72); backdrop-filter:blur(16px) saturate(1.5);
+    -webkit-backdrop-filter:blur(16px) saturate(1.5);
+    border-bottom:1px solid rgba(221,210,196,.6);
+    box-shadow:var(--shadow-sm);
     display:flex; align-items:center; justify-content:space-between;
     padding:.55rem 1.4rem; gap:1rem; flex-wrap:wrap;
   }
@@ -43,9 +50,11 @@
   .btn{
     border:1px solid var(--border-strong); background:var(--surface); color:var(--ink);
     padding:.35rem .8rem; border-radius:999px; font-size:.85rem; font-weight:600;
-    cursor:pointer; transition:all .15s ease; font-family:inherit;
+    cursor:pointer; transition:all .18s ease; font-family:inherit;
+    box-shadow:var(--shadow-sm);
   }
-  .btn:hover{border-color:var(--accent); color:var(--accent)}
+  .btn:hover{border-color:var(--accent); color:var(--accent); transform:translateY(-1px)}
+  .btn:active{transform:translateY(0)}
   .lang-switch{display:flex; border:1px solid var(--border-strong); border-radius:999px; overflow:hidden}
   .lang-switch button{
     border:none; background:transparent; padding:.35rem .85rem; font-size:.85rem;
@@ -61,15 +70,16 @@
 
   /* ---------- Hero ---------- */
   .hero{
-    background:var(--surface); border:1px solid var(--border); border-radius:18px;
+    background:var(--surface); border:1px solid rgba(236,228,218,.8); border-radius:20px;
     padding:2.4rem 2.2rem; margin-bottom:2.2rem; position:relative; overflow:hidden;
+    box-shadow:var(--shadow-md);
   }
   .hero::before{
     content:""; position:absolute; top:0; left:0; right:0; height:5px;
     background:linear-gradient(90deg, var(--accent), #7f1d1d);
   }
   .hero .kicker{color:var(--accent); font-weight:700; text-transform:uppercase; letter-spacing:.12em; font-size:.75rem; margin:0 0 .5rem}
-  .hero h1{margin:0 0 .6rem; font-size:2rem; line-height:1.2; letter-spacing:-.02em}
+  .hero h1{margin:0 0 .6rem; font-size:clamp(1.55rem, 4.5vw, 2.1rem); line-height:1.15; letter-spacing:-.025em; text-wrap:balance}
   .hero p.lead{margin:0 0 1.2rem; color:var(--muted); font-size:1.05rem; max-width:60ch}
   .badges{display:flex; flex-wrap:wrap; gap:.5rem}
   .badge{
@@ -80,8 +90,8 @@
 
   /* ---------- TOC ---------- */
   .toc{
-    background:var(--surface); border:1px solid var(--border); border-radius:14px;
-    padding:1.2rem 1.5rem; margin-bottom:2.4rem;
+    background:var(--surface); border:1px solid rgba(236,228,218,.8); border-radius:var(--radius);
+    padding:1.2rem 1.5rem; margin-bottom:2.4rem; box-shadow:var(--shadow-sm);
   }
   .toc h2{margin:0 0 .6rem; font-size:.8rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted)}
   .toc ol{margin:0; padding-left:1.3rem; columns:2; column-gap:2rem}
@@ -97,7 +107,7 @@
     padding-bottom:.6rem; border-bottom:2px solid var(--border);
   }
   .section > h2 .num{
-    background:var(--accent); color:#fff; font-size:.85rem; font-weight:800;
+    background:linear-gradient(135deg, #c24049, var(--accent-ink)); color:#fff; font-size:.85rem; font-weight:800;
     width:1.9rem; height:1.9rem; border-radius:8px; display:inline-flex;
     align-items:center; justify-content:center; flex:0 0 auto;
   }
@@ -110,12 +120,12 @@
 
   /* ---------- Cards & callouts ---------- */
   .card{
-    background:var(--surface); border:1px solid var(--border); border-radius:14px;
-    padding:1.3rem 1.5rem; margin:1.2rem 0;
+    background:var(--surface); border:1px solid rgba(236,228,218,.8); border-radius:var(--radius);
+    padding:1.3rem 1.5rem; margin:1.2rem 0; box-shadow:var(--shadow-sm);
   }
   .callout{
-    border-radius:12px; padding:1rem 1.2rem; margin:1.2rem 0;
-    border-left:4px solid; font-size:.95rem;
+    border-radius:var(--radius-sm); padding:1rem 1.2rem; margin:1.2rem 0;
+    border-left:4px solid; font-size:.95rem; box-shadow:var(--shadow-sm);
   }
   .callout .callout-title{font-weight:700; margin:0 0 .3rem; display:flex; gap:.45rem; align-items:center}
   .callout.info{background:var(--info-bg); border-color:var(--info-border); color:var(--info-ink)}
@@ -125,27 +135,29 @@
   .callout code{background:rgba(0,0,0,.06); padding:.05rem .35rem; border-radius:4px}
 
   /* ---------- Quick summary ---------- */
-  .quick{background:linear-gradient(180deg,#fff,#fdf8f6); border:1px solid #f0dede; border-radius:16px; padding:1.4rem 1.6rem; margin:0 0 1rem}
+  .quick{background:linear-gradient(180deg,#fff,#fdf6f1); border:1px solid rgba(236,228,218,.8); border-radius:var(--radius); padding:1.4rem 1.6rem; margin:0 0 1rem; box-shadow:var(--shadow-sm)}
   .quick h3{margin:.2rem 0 .8rem; color:var(--accent-ink)}
   .quick ol{margin:0}
   .quick b{color:var(--accent-ink)}
 
   /* ---------- Formula ---------- */
   .formula{
-    background:var(--code-bg); color:var(--code-ink); border-radius:12px;
+    background:var(--code-bg); color:var(--code-ink); border-radius:var(--radius-sm);
     padding:1rem 1.4rem; text-align:center; font-family:Consolas, monospace;
-    font-size:1.05rem; margin:1.2rem 0; letter-spacing:.02em;
+    font-size:1.05rem; margin:1.2rem 0; letter-spacing:.02em; box-shadow:var(--shadow-sm);
   }
   .formula .res{color:#fcd34d}
 
   /* ---------- Tables ---------- */
-  table{width:100%; border-collapse:collapse; margin:1.2rem 0; font-size:.9rem; background:var(--surface); border-radius:12px; overflow:hidden; border:1px solid var(--border)}
+  table{width:100%; border-collapse:collapse; margin:1.2rem 0; font-size:.9rem; background:var(--surface); border-radius:var(--radius-sm); overflow:hidden; border:1px solid rgba(236,228,218,.8); box-shadow:var(--shadow-sm)}
   th{
-    background:#1c1917; color:#fafaf9; text-align:left; padding:.6rem .8rem;
+    background:#292524; color:#fafaf9; text-align:left; padding:.65rem .8rem;
     font-size:.75rem; text-transform:uppercase; letter-spacing:.06em;
   }
-  td{padding:.6rem .8rem; border-top:1px solid var(--border); vertical-align:top}
+  td{padding:.6rem .8rem; border-top:1px solid var(--border); vertical-align:top; overflow-wrap:anywhere; word-break:break-word}
+  tbody tr{transition:background .15s ease}
   tbody tr:nth-child(even){background:#faf5ef}
+  tbody tr:hover{background:#fdf8f2}
   td.mono, th.mono{font-family:Consolas, monospace; font-size:.83rem}
   .pill{
     display:inline-block; padding:.1rem .55rem; border-radius:999px;
@@ -158,8 +170,8 @@
 
   /* ---------- Code ---------- */
   pre{
-    background:var(--code-bg); color:var(--code-ink); border-radius:12px;
-    padding:1rem 1.2rem; overflow-x:auto; font-size:.85rem; line-height:1.6; margin:1.1rem 0;
+    background:var(--code-bg); color:var(--code-ink); border-radius:var(--radius-sm);
+    padding:1rem 1.2rem; overflow-x:auto; font-size:.85rem; line-height:1.6; margin:1.1rem 0; box-shadow:var(--shadow-sm);
   }
   pre .c{color:#a8a29e}
   pre .a{color:var(--code-accent)}
@@ -168,8 +180,8 @@
 
   /* ---------- Steps ---------- */
   .step{
-    background:var(--surface); border:1px solid var(--border); border-radius:14px;
-    padding:1.3rem 1.5rem; margin:1.4rem 0; position:relative;
+    background:var(--surface); border:1px solid rgba(236,228,218,.8); border-radius:var(--radius);
+    padding:1.3rem 1.5rem; margin:1.4rem 0; position:relative; box-shadow:var(--shadow-sm);
   }
   .step h3{margin:.1rem 0 .2rem; display:flex; align-items:center; gap:.7rem; font-size:1.05rem}
   .step .stepnum{
@@ -184,7 +196,7 @@
 
   /* ---------- Figures ---------- */
   figure{margin:1.6rem 0}
-  figure svg{width:100%; height:auto; display:block; background:var(--surface); border:1px solid var(--border); border-radius:14px}
+  figure svg{width:100%; height:auto; display:block; background:var(--surface); border:1px solid rgba(236,228,218,.8); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm)}
   figcaption{font-size:.82rem; color:var(--muted); text-align:center; margin-top:.5rem}
 
   /* ---------- Checklist ---------- */
@@ -209,6 +221,7 @@
   @page{size:A4; margin:13mm}
   @media print{
     body{background:#fff; font-size:11.5px}
+    *{box-shadow:none !important}
     .topbar{position:static; border-bottom:2px solid #1c1917}
     .actions, .lang-switch, .btn{display:none !important}
     .hero, .card, .step, .callout, figure svg{break-inside:avoid}
@@ -653,7 +666,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v1.2 (robocopy, fond parchemin)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v1.3 (design moderne, tableaux réparés)</p>
   </footer>
 </div>
 
@@ -1069,7 +1082,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v1.2 (robocopy, parchment background)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v1.3 (modern design, fixed tables)</p>
   </footer>
 </div>
 
