@@ -1,0 +1,1093 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Guide Ultime — Modding d'Arme UE 5.5 · The Blood of Dawnwalker</title>
+<style>
+  :root{
+    --bg:#faf9f7; --surface:#ffffff; --ink:#1c1917; --muted:#78716c;
+    --accent:#b3222c; --accent-soft:#fdf1f1; --accent-ink:#8f1a22;
+    --border:#e7e5e4; --border-strong:#d6d3d1;
+    --code-bg:#1c1917; --code-ink:#f5f5f4; --code-accent:#fca5a5;
+    --info-bg:#eff6ff; --info-ink:#1e40af; --info-border:#3b82f6;
+    --warn-bg:#fff7ed; --warn-ink:#9a3412; --warn-border:#f97316;
+    --tip-bg:#f0fdf4; --tip-ink:#166534; --tip-border:#22c55e;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    line-height:1.65; font-size:16px;
+  }
+  code, pre, .mono{font-family:"Cascadia Code", "SF Mono", Consolas, "Courier New", monospace}
+
+  /* ---------- Topbar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:60;
+    background:rgba(250,249,247,.92); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:.55rem 1.4rem; gap:1rem; flex-wrap:wrap;
+  }
+  .brand{display:flex; align-items:center; gap:.6rem; font-weight:700; font-size:.95rem}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);display:inline-block}
+  .brand small{color:var(--muted); font-weight:500}
+  .actions{display:flex; align-items:center; gap:.5rem}
+  .btn{
+    border:1px solid var(--border-strong); background:var(--surface); color:var(--ink);
+    padding:.35rem .8rem; border-radius:999px; font-size:.85rem; font-weight:600;
+    cursor:pointer; transition:all .15s ease; font-family:inherit;
+  }
+  .btn:hover{border-color:var(--accent); color:var(--accent)}
+  .lang-switch{display:flex; border:1px solid var(--border-strong); border-radius:999px; overflow:hidden}
+  .lang-switch button{
+    border:none; background:transparent; padding:.35rem .85rem; font-size:.85rem;
+    font-weight:700; cursor:pointer; color:var(--muted); font-family:inherit;
+  }
+  .lang-switch button.active{background:var(--accent); color:#fff}
+  .btn-primary{background:var(--accent); border-color:var(--accent); color:#fff}
+  .btn-primary:hover{background:var(--accent-ink); color:#fff}
+
+  /* ---------- Layout ---------- */
+  main{max-width:920px; margin:0 auto; padding:0 1.4rem 4rem}
+  .content{padding-top:2.2rem}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:var(--surface); border:1px solid var(--border); border-radius:18px;
+    padding:2.4rem 2.2rem; margin-bottom:2.2rem; position:relative; overflow:hidden;
+  }
+  .hero::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:5px;
+    background:linear-gradient(90deg, var(--accent), #7f1d1d);
+  }
+  .hero .kicker{color:var(--accent); font-weight:700; text-transform:uppercase; letter-spacing:.12em; font-size:.75rem; margin:0 0 .5rem}
+  .hero h1{margin:0 0 .6rem; font-size:2rem; line-height:1.2; letter-spacing:-.02em}
+  .hero p.lead{margin:0 0 1.2rem; color:var(--muted); font-size:1.05rem; max-width:60ch}
+  .badges{display:flex; flex-wrap:wrap; gap:.5rem}
+  .badge{
+    background:var(--accent-soft); color:var(--accent-ink); border:1px solid #f3d4d6;
+    padding:.25rem .7rem; border-radius:999px; font-size:.78rem; font-weight:600;
+  }
+  .badge.neutral{background:#f5f5f4; color:var(--muted); border-color:var(--border)}
+
+  /* ---------- TOC ---------- */
+  .toc{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:1.2rem 1.5rem; margin-bottom:2.4rem;
+  }
+  .toc h2{margin:0 0 .6rem; font-size:.8rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted)}
+  .toc ol{margin:0; padding-left:1.3rem; columns:2; column-gap:2rem}
+  .toc li{margin:.25rem 0; break-inside:avoid}
+  .toc a{color:var(--ink); text-decoration:none; border-bottom:1px dotted var(--border-strong)}
+  .toc a:hover{color:var(--accent); border-color:var(--accent)}
+
+  /* ---------- Sections ---------- */
+  .section{margin:3rem 0}
+  .section > h2{
+    display:flex; align-items:center; gap:.8rem;
+    font-size:1.45rem; letter-spacing:-.01em; margin:0 0 1.2rem;
+    padding-bottom:.6rem; border-bottom:2px solid var(--border);
+  }
+  .section > h2 .num{
+    background:var(--accent); color:#fff; font-size:.85rem; font-weight:800;
+    width:1.9rem; height:1.9rem; border-radius:8px; display:inline-flex;
+    align-items:center; justify-content:center; flex:0 0 auto;
+  }
+  h3{font-size:1.08rem; margin:1.8rem 0 .7rem}
+  h3 .tag{color:var(--accent); font-weight:800; margin-right:.4rem}
+  p{margin:.7rem 0}
+  ul,ol{padding-left:1.4rem}
+  li{margin:.35rem 0}
+  a{color:var(--accent)}
+
+  /* ---------- Cards & callouts ---------- */
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:1.3rem 1.5rem; margin:1.2rem 0;
+  }
+  .callout{
+    border-radius:12px; padding:1rem 1.2rem; margin:1.2rem 0;
+    border-left:4px solid; font-size:.95rem;
+  }
+  .callout .callout-title{font-weight:700; margin:0 0 .3rem; display:flex; gap:.45rem; align-items:center}
+  .callout.info{background:var(--info-bg); border-color:var(--info-border); color:var(--info-ink)}
+  .callout.warn{background:var(--warn-bg); border-color:var(--warn-border); color:var(--warn-ink)}
+  .callout.tip{background:var(--tip-bg); border-color:var(--tip-border); color:var(--tip-ink)}
+  .callout p{margin:.2rem 0}
+  .callout code{background:rgba(0,0,0,.06); padding:.05rem .35rem; border-radius:4px}
+
+  /* ---------- Quick summary ---------- */
+  .quick{background:linear-gradient(180deg,#fff,#fdf8f6); border:1px solid #f0dede; border-radius:16px; padding:1.4rem 1.6rem; margin:0 0 1rem}
+  .quick h3{margin:.2rem 0 .8rem; color:var(--accent-ink)}
+  .quick ol{margin:0}
+  .quick b{color:var(--accent-ink)}
+
+  /* ---------- Formula ---------- */
+  .formula{
+    background:var(--code-bg); color:var(--code-ink); border-radius:12px;
+    padding:1rem 1.4rem; text-align:center; font-family:Consolas, monospace;
+    font-size:1.05rem; margin:1.2rem 0; letter-spacing:.02em;
+  }
+  .formula .res{color:#fcd34d}
+
+  /* ---------- Tables ---------- */
+  table{width:100%; border-collapse:collapse; margin:1.2rem 0; font-size:.9rem; background:var(--surface); border-radius:12px; overflow:hidden; border:1px solid var(--border)}
+  th{
+    background:#1c1917; color:#fafaf9; text-align:left; padding:.6rem .8rem;
+    font-size:.75rem; text-transform:uppercase; letter-spacing:.06em;
+  }
+  td{padding:.6rem .8rem; border-top:1px solid var(--border); vertical-align:top}
+  tbody tr:nth-child(even){background:#faf9f8}
+  td.mono, th.mono{font-family:Consolas, monospace; font-size:.83rem}
+  .pill{
+    display:inline-block; padding:.1rem .55rem; border-radius:999px;
+    font-size:.78rem; font-weight:700; font-family:Consolas, monospace;
+  }
+  .pill.new{background:var(--accent); color:#fff}
+  .pill.old{background:#f5f5f4; color:var(--muted); border:1px solid var(--border)}
+  tr.highlight td{background:var(--accent-soft)}
+  tr.highlight td:first-child{border-left:3px solid var(--accent)}
+
+  /* ---------- Code ---------- */
+  pre{
+    background:var(--code-bg); color:var(--code-ink); border-radius:12px;
+    padding:1rem 1.2rem; overflow-x:auto; font-size:.85rem; line-height:1.6; margin:1.1rem 0;
+  }
+  pre .c{color:#a8a29e}
+  pre .a{color:var(--code-accent)}
+  code.inline{background:#f0eeec; border:1px solid var(--border); padding:.08rem .4rem; border-radius:5px; font-size:.85em}
+  pre code .cmd{color:#93c5fd}
+
+  /* ---------- Steps ---------- */
+  .step{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:1.3rem 1.5rem; margin:1.4rem 0; position:relative;
+  }
+  .step h3{margin:.1rem 0 .2rem; display:flex; align-items:center; gap:.7rem; font-size:1.05rem}
+  .step .stepnum{
+    background:#1c1917; color:#fff; width:1.7rem; height:1.7rem; border-radius:50%;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-size:.8rem; font-weight:800; flex:0 0 auto;
+  }
+  .fieldrow{display:flex; gap:.5rem; flex-wrap:wrap; margin:.5rem 0; padding:.4rem .6rem; background:#faf9f8; border-radius:8px}
+  .fieldrow .k{font-family:Consolas, monospace; font-size:.82rem; color:var(--muted); min-width:5.5rem}
+  .fieldrow .v{font-family:Consolas, monospace; font-size:.85rem; font-weight:600}
+  .fieldrow .v.acc{color:var(--accent-ink)}
+
+  /* ---------- Figures ---------- */
+  figure{margin:1.6rem 0}
+  figure svg{width:100%; height:auto; display:block; background:var(--surface); border:1px solid var(--border); border-radius:14px}
+  figcaption{font-size:.82rem; color:var(--muted); text-align:center; margin-top:.5rem}
+
+  /* ---------- Checklist ---------- */
+  ul.checklist{list-style:none; padding-left:0}
+  ul.checklist li{padding-left:1.8rem; position:relative}
+  ul.checklist li::before{
+    content:"✓"; position:absolute; left:0; top:0;
+    color:var(--tip-ink); font-weight:800;
+  }
+
+  /* ---------- Footer ---------- */
+  footer.site{
+    border-top:1px solid var(--border); margin-top:3rem; padding-top:1.4rem;
+    color:var(--muted); font-size:.82rem; text-align:center;
+  }
+
+  /* ---------- Language visibility ---------- */
+  body.lang-en .content.fr{display:none}
+  body.lang-fr .content.en{display:none}
+
+  /* ---------- Print ---------- */
+  @page{size:A4; margin:13mm}
+  @media print{
+    body{background:#fff; font-size:11.5px}
+    .topbar{position:static; border-bottom:2px solid #1c1917}
+    .actions, .lang-switch, .btn{display:none !important}
+    .hero, .card, .step, .callout, figure svg{break-inside:avoid}
+    .section{break-inside:auto}
+    h2, h3{break-after:avoid}
+    pre, table{break-inside:avoid}
+    a{color:inherit; text-decoration:none}
+    .toc{display:none}
+    .hero::before{background:var(--accent)}
+  }
+</style>
+</head>
+<body class="lang-fr">
+
+<header class="topbar">
+  <div class="brand"><span class="dot"></span> Guide Modding <small>· UE 5.5 · The Blood of Dawnwalker</small></div>
+  <div class="actions">
+    <div class="lang-switch">
+      <button id="btn-fr" class="active">FR</button>
+      <button id="btn-en">EN</button>
+    </div>
+    <button class="btn btn-primary" id="btn-print" data-fr="Imprimer · PDF" data-en="Print · PDF">Imprimer · PDF</button>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================= FRANÇAIS ============================= -->
+<div class="content fr" lang="fr">
+
+  <section class="hero">
+    <p class="kicker">Guide ultime · Modding d'arme sous Unreal Engine 5.5</p>
+    <h1>Modifier <code class="mono">ITM_Weapon_SwordDawnwalker5a.uasset</code></h1>
+    <p class="lead">Méthode complète et reproductible pour ajouter des modificateurs de combat (Gameplay Effects) aux armes de <em>The Blood of Dawnwalker</em> — de l'édition binaire dans UAssetGUI jusqu'au test en jeu.</p>
+    <div class="badges">
+      <span class="badge">Unreal Engine 5.5</span>
+      <span class="badge">Conteneur IoStore / Zen</span>
+      <span class="badge">UAssetGUI</span>
+      <span class="badge">FModel</span>
+      <span class="badge">retoc.exe</span>
+      <span class="badge neutral">Gameplay Ability System (GAS)</span>
+    </div>
+  </section>
+
+  <div class="quick">
+    <h3>⚡ En 30 secondes — le workflow complet</h3>
+    <ol>
+      <li><b>Sauvegarder</b> le dossier legacy (toujours, avant toute modification binaire).</li>
+      <li><b>Ajouter 4 imports</b> dans l'Import Data (2 paires Package + Classe <code class="mono">_C</code>).</li>
+      <li><b>Créer</b> les entrées 4 et 5 de <code class="mono">CustomEffectParameters</code>, puis remplir <code class="mono">Effect</code> et <code class="mono">Value</code>.</li>
+      <li><b>Sauvegarder, fermer, rouvrir</b> UAssetGUI et vérifier l'intégrité.</li>
+      <li><b>Compiler</b> avec <code class="mono">retoc to-zen --version UE5_5</code>.</li>
+      <li><b>Installer</b> les 3 fichiers (<code class="mono">.utoc / .ucas / .pak</code>) dans <code class="mono">Paks\~mods\</code> et tester en jeu.</li>
+    </ol>
+  </div>
+
+  <nav class="toc">
+    <h2>Sommaire</h2>
+    <ol>
+      <li><a href="#s1-fr">Vue d'ensemble & mécanique interne</a></li>
+      <li><a href="#s2-fr">Tableau récapitulatif des statistiques</a></li>
+      <li><a href="#s3-fr">Outils et structure de travail</a></li>
+      <li><a href="#s4-fr">Procédure technique pas à pas</a></li>
+      <li><a href="#s5-fr">Compilation avec retoc</a></li>
+      <li><a href="#s6-fr">Installation & test en jeu</a></li>
+    </ol>
+  </nav>
+
+  <!-- ============ SECTION 1 ============ -->
+  <section class="section" id="s1-fr">
+    <h2><span class="num">1</span> Vue d'ensemble & mécanique interne</h2>
+
+    <h3><span class="tag">A.</span> Le fonctionnement des effets (Gameplay Effect)</h3>
+    <p>Les statistiques et bonus des armes sont régis par le <strong>Gameplay Ability System (GAS)</strong> d'Unreal Engine :</p>
+    <ul>
+      <li>L'asset d'arme expose un tableau de structures nommé <code class="inline">CustomEffectParameters</code>.</li>
+      <li>Chaque entrée de ce tableau associe une classe Blueprint dérivée (<code class="inline">_C</code>) à une valeur flottante (<code class="inline">Value</code>) injectée dans le moteur via l'attribut <code class="inline">Stats.CustomModifier</code>.</li>
+    </ul>
+    <div class="callout info">
+      <p class="callout-title">📐 Correspondance valeur interne → bonus en jeu</p>
+      <p><code>0.409</code> correspond au multiplicateur additif de <strong>+90 %</strong> en jeu. Autres valeurs observées sur cet asset : <code>0.227</code> → +50 %, <code>-0.364</code> → −80 %.</p>
+    </div>
+
+    <h3><span class="tag">B.</span> Comprendre le <code class="inline">FPackageIndex</code> (champ <code class="inline">Variant</code> dans UAssetGUI)</h3>
+    <p>Dans UAssetGUI, une <code class="inline">ObjectProperty</code> (comme le champ <code class="inline">Effect</code>) ne stocke pas le nom de la classe en texte brut. Elle utilise un <strong><code class="inline">FPackageIndex</code></strong> :</p>
+    <ul>
+      <li><code>0</code> : référence nulle (<em>null</em>).</li>
+      <li>Entier positif (<code>&gt; 0</code>) : pointe vers la table d'<strong>Export Data</strong> (Index = Export − 1).</li>
+      <li><strong>Entier négatif (<code>&lt; 0</code>)</strong> : pointe vers la table d'<strong>Import Data</strong>.</li>
+    </ul>
+    <div class="formula">Index réel de l'import dans la table <span class="res">= −Variant − 1</span></div>
+
+    <div class="callout warn">
+      <p class="callout-title">⚠️ Pourquoi ne pas mettre <code>-1</code> sur toutes les lignes ?</p>
+      <p>Le chiffre <code>-1</code> correspond au premier import de la table (<code>GE_DamageAgainstCorruptedMultiplier_C</code>). Si l'on met <code>-1</code> pour les nouvelles entrées, le jeu appliquera <strong>de nouveau le bonus contre les Surnaturels</strong>. Pour cibler les Mortels ou les Animaux, il faut pointer vers leurs index d'import respectifs (<code>-21</code> et <code>-23</code>).</p>
+    </div>
+
+    <p><strong>Table de résolution des pointeurs dans l'asset :</strong></p>
+    <figure>
+      <svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Résolution des FPackageIndex vers la table Import Data">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#78716c"/>
+          </marker>
+          <marker id="arrAcc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#b3222c"/>
+          </marker>
+        </defs>
+        <text x="30" y="34" font-size="13" font-weight="700" fill="#1c1917">Variant (FPackageIndex)</text>
+        <text x="420" y="34" font-size="13" font-weight="700" fill="#1c1917">Import Data — entrée ciblée</text>
+        <line x1="380" y1="20" x2="380" y2="320" stroke="#e7e5e4" stroke-width="1.5"/>
+
+        <!-- -1 -->
+        <rect x="30" y="52" width="90" height="36" rx="8" fill="#f5f5f4" stroke="#d6d3d1"/>
+        <text x="75" y="75" font-size="14" font-weight="700" fill="#78716c" text-anchor="middle" font-family="monospace">-1</text>
+        <line x1="120" y1="70" x2="415" y2="70" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
+        <text x="425" y="66" font-size="11.5" fill="#78716c" font-family="monospace">Import #0 — GE_DamageAgainstCorruptedMultiplier_C</text>
+        <text x="425" y="80" font-size="10.5" fill="#a8a29e" font-family="monospace">Surnaturels (existant)</text>
+
+        <!-- -20 -->
+        <rect x="30" y="108" width="90" height="36" rx="8" fill="#fdf1f1" stroke="#e7b6b9"/>
+        <text x="75" y="131" font-size="14" font-weight="700" fill="#b3222c" text-anchor="middle" font-family="monospace">-20</text>
+        <line x1="120" y1="126" x2="415" y2="126" stroke="#b3222c" stroke-width="1.5" marker-end="url(#arrAcc)"/>
+        <text x="425" y="122" font-size="11.5" fill="#8f1a22" font-family="monospace">Import #19 — Package …/GE_DamageAgainstUntouchedMultiplier</text>
+        <text x="425" y="136" font-size="10.5" fill="#a8a29e" font-family="monospace">Package parent (ajouté)</text>
+
+        <!-- -21 -->
+        <rect x="30" y="164" width="90" height="36" rx="8" fill="#b3222c"/>
+        <text x="75" y="187" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" font-family="monospace">-21</text>
+        <line x1="120" y1="182" x2="415" y2="182" stroke="#b3222c" stroke-width="2" marker-end="url(#arrAcc)"/>
+        <text x="425" y="178" font-size="11.5" font-weight="700" fill="#8f1a22" font-family="monospace">Import #20 — GE_DamageAgainstUntouchedMultiplier_C</text>
+        <text x="425" y="192" font-size="10.5" fill="#a8a29e" font-family="monospace">Classe Mortels — utilisée pour Effect (index 4)</text>
+
+        <!-- -22 -->
+        <rect x="30" y="220" width="90" height="36" rx="8" fill="#fdf1f1" stroke="#e7b6b9"/>
+        <text x="75" y="243" font-size="14" font-weight="700" fill="#b3222c" text-anchor="middle" font-family="monospace">-22</text>
+        <line x1="120" y1="238" x2="415" y2="238" stroke="#b3222c" stroke-width="1.5" marker-end="url(#arrAcc)"/>
+        <text x="425" y="234" font-size="11.5" fill="#8f1a22" font-family="monospace">Import #21 — Package …/GE_DamageAgainstAnimalsMultiplier</text>
+        <text x="425" y="248" font-size="10.5" fill="#a8a29e" font-family="monospace">Package parent (ajouté)</text>
+
+        <!-- -23 -->
+        <rect x="30" y="276" width="90" height="36" rx="8" fill="#b3222c"/>
+        <text x="75" y="299" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" font-family="monospace">-23</text>
+        <line x1="120" y1="294" x2="415" y2="294" stroke="#b3222c" stroke-width="2" marker-end="url(#arrAcc)"/>
+        <text x="425" y="290" font-size="11.5" font-weight="700" fill="#8f1a22" font-family="monospace">Import #22 — GE_DamageAgainstAnimalsMultiplier_C</text>
+        <text x="425" y="304" font-size="10.5" fill="#a8a29e" font-family="monospace">Classe Animaux — utilisée pour Effect (index 5)</text>
+      </svg>
+      <figcaption>Les pointeurs négatifs <code>-21</code> et <code>-23</code> ciblent directement les classes Blueprint ajoutées dans l'Import Data.</figcaption>
+    </figure>
+
+    <table>
+      <thead>
+        <tr><th>Variant</th><th>Cible dans l'Import Data</th><th>Rôle</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="mono">-1</td><td class="mono">Import #0 — GE_DamageAgainstCorruptedMultiplier_C</td><td>Effet existant (Surnaturels)</td></tr>
+        <tr class="highlight"><td class="mono">-20</td><td class="mono">Import #19 — Package /Game/_Dawnwalker/Stats/CustomItemModifiers/GE_DamageAgainstUntouchedMultiplier</td><td>Package parent (ajouté)</td></tr>
+        <tr class="highlight"><td class="mono">-21</td><td class="mono">Import #20 — Classe GE_DamageAgainstUntouchedMultiplier_C</td><td><strong>Effect de l'index 4 (Mortels)</strong></td></tr>
+        <tr class="highlight"><td class="mono">-22</td><td class="mono">Import #21 — Package /Game/_Dawnwalker/Stats/CustomItemModifiers/GE_DamageAgainstAnimalsMultiplier</td><td>Package parent (ajouté)</td></tr>
+        <tr class="highlight"><td class="mono">-23</td><td class="mono">Import #22 — Classe GE_DamageAgainstAnimalsMultiplier_C</td><td><strong>Effect de l'index 5 (Animaux)</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span class="tag">C.</span> Le format conteneur UE5 (Zen / IoStore)</h3>
+    <p>UE5.5 utilise le conteneur IoStore composé de trois fichiers indissociables :</p>
+    <ol>
+      <li><code class="inline">.utoc</code> — Table des matières / catalogue des chunks.</li>
+      <li><code class="inline">.ucas</code> — Données binaires compressées.</li>
+      <li><code class="inline">.pak</code> — Index de compatibilité.</li>
+    </ol>
+    <figure>
+      <svg viewBox="0 0 880 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pipeline de compilation du mod">
+        <defs>
+          <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#b3222c"/>
+          </marker>
+        </defs>
+        <rect x="15" y="30" width="170" height="62" rx="10" fill="#f5f5f4" stroke="#d6d3d1"/>
+        <text x="100" y="56" font-size="12" font-weight="700" fill="#1c1917" text-anchor="middle" font-family="monospace">dossier_mod_legacy\</text>
+        <text x="100" y="74" font-size="10.5" fill="#78716c" text-anchor="middle" font-family="monospace">arborescence legacy .uasset</text>
+
+        <line x1="185" y1="61" x2="235" y2="61" stroke="#b3222c" stroke-width="2" marker-end="url(#arr2)"/>
+
+        <rect x="240" y="22" width="200" height="78" rx="10" fill="#b3222c"/>
+        <text x="340" y="48" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="monospace">retoc.exe to-zen</text>
+        <text x="340" y="66" font-size="11" fill="#fecaca" text-anchor="middle" font-family="monospace">--version UE5_5</text>
+        <text x="340" y="84" font-size="10.5" fill="#fecaca" text-anchor="middle" font-family="monospace">conversion Zen / IoStore</text>
+
+        <line x1="440" y1="61" x2="490" y2="61" stroke="#b3222c" stroke-width="2" marker-end="url(#arr2)"/>
+
+        <rect x="495" y="14" width="170" height="94" rx="10" fill="#fdf1f1" stroke="#e7b6b9"/>
+        <text x="580" y="36" font-size="11.5" font-weight="700" fill="#8f1a22" text-anchor="middle" font-family="monospace">3 fichiers de sortie</text>
+        <text x="580" y="56" font-size="11" fill="#8f1a22" text-anchor="middle" font-family="monospace">Sword_…_P.utoc</text>
+        <text x="580" y="72" font-size="11" fill="#8f1a22" text-anchor="middle" font-family="monospace">Sword_…_P.ucas</text>
+        <text x="580" y="88" font-size="11" fill="#8f1a22" text-anchor="middle" font-family="monospace">Sword_…_P.pak</text>
+
+        <line x1="665" y1="61" x2="715" y2="61" stroke="#b3222c" stroke-width="2" marker-end="url(#arr2)"/>
+
+        <rect x="720" y="30" width="145" height="62" rx="10" fill="#1c1917"/>
+        <text x="792" y="54" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" font-family="monospace">Content\Paks\</text>
+        <text x="792" y="72" font-size="11" fill="#fca5a5" text-anchor="middle" font-family="monospace">~mods\</text>
+      </svg>
+      <figcaption>Pipeline complet : arborescence legacy → conversion retoc → conteneur IoStore → dossier de mods du jeu.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ SECTION 2 ============ -->
+  <section class="section" id="s2-fr">
+    <h2><span class="num">2</span> Tableau récapitulatif des statistiques</h2>
+    <p>État final visé du tableau <code class="inline">CustomEffectParameters</code> après modification :</p>
+    <table>
+      <thead>
+        <tr><th>Index</th><th>Statistique visée</th><th>Effect</th><th>Variant</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="mono">0</td><td>Swordmastery Cooldown −80 %</td><td class="mono">GE_SwordSkillCooldownMultiplier_C</td><td class="mono">-4</td><td class="mono">-0.364</td></tr>
+        <tr><td class="mono">1</td><td>Critical Hit Chance +50 %</td><td class="mono">GE_MeleeCriticalHitChanceMultiplier_C</td><td class="mono">-2</td><td class="mono">0.227</td></tr>
+        <tr><td class="mono">2</td><td>Critical Hit Damage +50 %</td><td class="mono">GE_SwordCritDamageMultiplier_C</td><td class="mono">-3</td><td class="mono">0.227</td></tr>
+        <tr><td class="mono">3</td><td>Damage vs Supernatural +90 %</td><td class="mono">GE_DamageAgainstCorruptedMultiplier_C</td><td class="mono">-1</td><td class="mono">0.409</td></tr>
+        <tr class="highlight"><td class="mono">4</td><td><strong>Damage vs Mortals +90 %</strong></td><td class="mono">GE_DamageAgainstUntouchedMultiplier_C</td><td class="mono"><span class="pill new">-21</span></td><td class="mono"><strong>0.409</strong></td></tr>
+        <tr class="highlight"><td class="mono">5</td><td><strong>Damage vs Animals +90 %</strong></td><td class="mono">GE_DamageAgainstAnimalsMultiplier_C</td><td class="mono"><span class="pill new">-23</span></td><td class="mono"><strong>0.409</strong></td></tr>
+      </tbody>
+    </table>
+    <div class="callout warn">
+      <p class="callout-title">📌 Note technique</p>
+      <p>Dans les fichiers internes du jeu, la catégorie des humains/mortels est nommée <strong><code>Untouched</code></strong>. N'utilise jamais de nom inventé comme <code>DamageVsMortals</code>.</p>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 3 ============ -->
+  <section class="section" id="s3-fr">
+    <h2><span class="num">3</span> Outils et structure de travail</h2>
+
+    <h3>Outils requis</h3>
+    <div class="card">
+      <ol>
+        <li><strong>UAssetGUI</strong> — Éditeur binaire d'assets Unreal.<br/>
+          <span class="mono" style="font-size:.83rem;color:#78716c">Version moteur : 5.5 · Mapping : Dawnwalker</span></li>
+        <li><strong>FModel</strong> — Explorateur d'assets d'origine (utilisé pour extraire les chemins de packages exacts).</li>
+        <li><strong>retoc.exe</strong> — Compilateur pour réempaqueter l'arborescence legacy vers le format Zen / IoStore.</li>
+      </ol>
+    </div>
+
+    <h3>Structure stricte des dossiers</h3>
+    <p>L'arborescence doit <strong>impérativement</strong> reproduire le chemin interne du jeu à partir d'un dossier racine (ex. <code class="inline">dossier_mod_legacy</code>) :</p>
+    <pre><code>dossier_mod_legacy\
+└── Dawnwalker\
+    └── Content\
+        └── _Dawnwalker\
+            └── Inventory\
+                └── Items\
+                    └── ITM_Weapon_SwordDawnwalker5a.uasset</code></pre>
+    <div class="callout warn">
+      <p class="callout-title">⚠️ Règle d'or</p>
+      <p>Un seul niveau de dossier en trop ou en moins et le jeu ne trouvera pas l'asset remplacé : le chemin doit refléter <em>exactement</em> la structure interne du pak d'origine.</p>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 4 ============ -->
+  <section class="section" id="s4-fr">
+    <h2><span class="num">4</span> Procédure technique pas à pas</h2>
+
+    <div class="step">
+      <h3><span class="stepnum">1</span> Sauvegarde de sécurité</h3>
+      <p>Copie toujours ton dossier de travail avant toute modification binaire :</p>
+      <pre><code class="cmd">xcopy /E /I "D:\Downloads\dossier_mod_legacy" "D:\Downloads\dossier_mod_legacy_BACKUP"</code></pre>
+    </div>
+
+    <div class="step">
+      <h3><span class="stepnum">2</span> Ajout des 4 imports dans l'Import Data</h3>
+      <p>Pour qu'Unreal Engine sache quelles classes charger, il faut déclarer chaque classe Blueprint (<code class="inline">BlueprintGeneratedClass</code>) <strong>ET</strong> son package parent (<code class="inline">Package</code>).</p>
+      <ol>
+        <li>Ouvrir <code class="inline">ITM_Weapon_SwordDawnwalker5a.uasset</code> dans UAssetGUI.</li>
+        <li>Dans le panneau de gauche, cliquer sur <strong>Import Data</strong>.</li>
+        <li>Faire défiler jusqu'à la dernière ligne existante (index <code class="mono">-19</code>).</li>
+        <li>Sur la ligne vide tout en bas (marquée <code class="mono">*</code>), ajouter successivement les 4 entrées :</li>
+      </ol>
+      <table>
+        <thead>
+          <tr><th>Ligne auto</th><th>ClassPackage</th><th>ClassName</th><th>OuterIndex</th><th>ObjectName</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono">-20</td><td class="mono">/Script/CoreUObject</td><td class="mono">Package</td><td class="mono">0</td><td class="mono">/Game/_Dawnwalker/Stats/CustomItemModifiers/GE_DamageAgainstUntouchedMultiplier</td></tr>
+          <tr><td class="mono">-21</td><td class="mono">/Script/Engine</td><td class="mono">BlueprintGeneratedClass</td><td class="mono">-20</td><td class="mono">GE_DamageAgainstUntouchedMultiplier_C</td></tr>
+          <tr><td class="mono">-22</td><td class="mono">/Script/CoreUObject</td><td class="mono">Package</td><td class="mono">0</td><td class="mono">/Game/_Dawnwalker/Stats/CustomItemModifiers/GE_DamageAgainstAnimalsMultiplier</td></tr>
+          <tr><td class="mono">-23</td><td class="mono">/Script/Engine</td><td class="mono">BlueprintGeneratedClass</td><td class="mono">-22</td><td class="mono">GE_DamageAgainstAnimalsMultiplier_C</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Explications techniques des champs :</strong></p>
+      <ul>
+        <li><strong>OuterIndex</strong> — Lie la classe à son dossier/package parent. La ligne <code class="mono">-21</code> a un <code class="inline">OuterIndex</code> de <code class="mono">-20</code> pour indiquer qu'elle appartient au package de la ligne <code class="mono">-20</code>.</li>
+        <li><strong>Suffixe <code>_C</code></strong> — Désigne la classe Blueprint générée nécessaire à l'exécution GAS.</li>
+      </ul>
+      <div class="callout warn">
+        <p class="callout-title">🚫 Ne jamais utiliser le préfixe <code>Default__…</code></p>
+        <p>Il pointe vers le <em>Class Default Object</em> (CDO), ce qui ferait échouer l'application de l'effet.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <h3><span class="stepnum">3</span> Contrôle automatique du Name Map</h3>
+      <p>Cliquer sur <strong>Name Map</strong> dans le menu de gauche :</p>
+      <ul>
+        <li>Vérifier que les 4 nouvelles chaînes de texte figurent bien tout en bas de la table (ex. indices <code class="mono">76</code> à <code class="mono">79</code>).</li>
+      </ul>
+      <div class="callout tip">
+        <p class="callout-title">💡 Bon à savoir</p>
+        <p>UAssetGUI les ajoute <strong>automatiquement</strong> lors de la création des imports. Ne pas les ajouter à la main.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <h3><span class="stepnum">4</span> Création des structures parentes dans CustomEffectParameters</h3>
+      <ol>
+        <li>Dérouler l'arborescence à gauche :</li>
+      </ol>
+      <pre><code>Export Data
+└── Export 1 (ITM_Weapon_SwordDawnwalker5a)
+    └── ItemWeaponDataAsset
+        └── CustomEffectParameters (4)</code></pre>
+      <ol start="2">
+        <li>Clic sur <code class="inline">CustomEffectParameters (4)</code>.</li>
+        <li>Sur la ligne <code class="mono">*</code> de la grille de droite, créer l'index 4 :</li>
+      </ol>
+      <div class="fieldrow"><span class="k">Name</span><span class="v">4</span></div>
+      <div class="fieldrow"><span class="k">Type</span><span class="v">StructProperty</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v">CustomEffectParameter</span></div>
+      <p style="font-size:.85rem;color:#78716c">→ Valider avec Entrée.</p>
+      <ol start="4">
+        <li>Sur la nouvelle ligne <code class="mono">*</code>, créer l'index 5 :</li>
+      </ol>
+      <div class="fieldrow"><span class="k">Name</span><span class="v">5</span></div>
+      <div class="fieldrow"><span class="k">Type</span><span class="v">StructProperty</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v">CustomEffectParameter</span></div>
+      <p style="font-size:.85rem;color:#78716c">→ Valider avec Entrée.</p>
+      <div class="callout info">
+        <p class="callout-title">✔ Résultat attendu</p>
+        <p>L'arbre à gauche indique désormais <code>CustomEffectParameters (6)</code> avec <code>4 (0)</code> et <code>5 (0)</code> — structures créées mais vides.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <h3><span class="stepnum">5</span> Remplissage des champs enfants</h3>
+
+      <h3 style="font-size:1rem">A. Remplir l'index 4 (Mortels / Untouched)</h3>
+      <ol>
+        <li>Sélectionner <code class="mono">4 (0)</code> dans l'arbre de gauche.</li>
+        <li>Sur la ligne <code class="mono">*</code> (1ʳᵉ propriété — Effet) :</li>
+      </ol>
+      <div class="fieldrow"><span class="k">Name</span><span class="v">Effect</span></div>
+      <div class="fieldrow"><span class="k">Type</span><span class="v">ObjectProperty</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v acc">-21</span><span style="font-size:.8rem;color:#78716c">(pointe directement vers la classe Untouched créée dans l'Import Data)</span></div>
+      <div class="fieldrow"><span class="k">Value</span><span class="v" style="color:#78716c">Laisser vide (UAssetGUI résout automatiquement le nom GE_DamageAgainstUntouchedMultiplier_C)</span></div>
+      <p style="font-size:.85rem;color:#78716c">→ Valider avec Entrée.</p>
+      <ol start="3">
+        <li>Sur la ligne <code class="mono">*</code> (2ᵉ propriété — Valeur) :</li>
+      </ol>
+      <div class="fieldrow"><span class="k">Name</span><span class="v">Value</span></div>
+      <div class="fieldrow"><span class="k">Type</span><span class="v">FloatProperty</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v" style="color:#78716c">(laisser vide)</span></div>
+      <div class="fieldrow"><span class="k">Value</span><span class="v acc">0.409</span></div>
+      <p style="font-size:.85rem;color:#78716c">→ Valider avec Entrée. Le nœud devient <code class="mono">4 (2)</code>.</p>
+
+      <h3 style="font-size:1rem">B. Remplir l'index 5 (Animaux / Animals)</h3>
+      <ol>
+        <li>Sélectionner <code class="mono">5 (0)</code> dans l'arbre de gauche.</li>
+        <li>Sur la ligne <code class="mono">*</code> (1ʳᵉ propriété — Effet) :</li>
+      </ol>
+      <div class="fieldrow"><span class="k">Name</span><span class="v">Effect</span></div>
+      <div class="fieldrow"><span class="k">Type</span><span class="v">ObjectProperty</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v acc">-23</span><span style="font-size:.8rem;color:#78716c">(pointe vers la classe Animals)</span></div>
+      <div class="fieldrow"><span class="k">Value</span><span class="v" style="color:#78716c">Laisser vide. Valider avec Entrée.</span></div>
+      <ol start="3">
+        <li>Sur la ligne <code class="mono">*</code> (2ᵉ propriété — Valeur) :</li>
+      </ol>
+      <div class="fieldrow"><span class="k">Name</span><span class="v">Value</span></div>
+      <div class="fieldrow"><span class="k">Type</span><span class="v">FloatProperty</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v" style="color:#78716c">(laisser vide)</span></div>
+      <div class="fieldrow"><span class="k">Value</span><span class="v acc">0.409</span></div>
+      <p style="font-size:.85rem;color:#78716c">→ Valider avec Entrée. Le nœud devient <code class="mono">5 (2)</code>.</p>
+    </div>
+
+    <div class="step">
+      <h3><span class="stepnum">6</span> Sauvegarde et vérification d'intégrité</h3>
+      <ol>
+        <li>Faire <strong>File &gt; Save</strong> (Ctrl+S).</li>
+        <li><strong>Fermer complètement UAssetGUI.</strong></li>
+        <li><strong>Rouvrir le fichier.</strong></li>
+        <li>Contrôler que :</li>
+      </ol>
+      <ul class="checklist">
+        <li><code class="inline">CustomEffectParameters (6)</code> est bien conservé.</li>
+        <li>Les nœuds 4 et 5 indiquent bien <code class="mono">(2)</code> enfants.</li>
+        <li>Les noms de classes <code class="mono">GE_DamageAgainstUntouchedMultiplier_C</code> et <code class="mono">GE_DamageAgainstAnimalsMultiplier_C</code> s'affichent clairement en vert/bleu à côté de leur <code class="inline">ObjectProperty</code>.</li>
+      </ul>
+      <div class="callout tip">
+        <p class="callout-title">💡 Pourquoi fermer puis rouvrir ?</p>
+        <p>La réouverture force UAssetGUI à relire le fichier tel qu'il a été écrit sur le disque. Si une écriture était corrompue (nom manquant, index orphelin), c'est à ce moment qu'elle apparaît — bien avant le crash potentiel en jeu.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 5 ============ -->
+  <section class="section" id="s5-fr">
+    <h2><span class="num">5</span> Compilation avec retoc (format Zen)</h2>
+    <p>Ouvrir une invite de commandes (<code class="inline">cmd.exe</code>) dans le dossier où se trouve <code class="inline">retoc.exe</code>. Exécuter la commande sur <strong>une seule ligne continue</strong> :</p>
+    <pre><code class="cmd">.\retoc.exe to-zen --version UE5_5 "D:\Downloads\dossier_mod_legacy" "Sword_Of_SaintM_OP_P.utoc"</code></pre>
+    <div class="callout warn">
+      <p class="callout-title">⚠️ Remarque</p>
+      <p>Sous <code>cmd.exe</code>, n'utilise pas de caractères de continuation PowerShell comme les backticks <code>`</code>, sous peine de générer des erreurs « commande introuvable ».</p>
+    </div>
+    <h3>Contrôle des fichiers de sortie</h3>
+    <p><code class="inline">retoc</code> génère trois fichiers dans le dossier :</p>
+    <ul class="checklist">
+      <li><code class="mono">Sword_Of_SaintM_OP_P.utoc</code></li>
+      <li><code class="mono">Sword_Of_SaintM_OP_P.ucas</code></li>
+      <li><code class="mono">Sword_Of_SaintM_OP_P.pak</code></li>
+    </ul>
+    <p>Vérifie que les trois fichiers ont une taille <strong>supérieure à 0 Ko</strong>.</p>
+  </section>
+
+  <!-- ============ SECTION 6 ============ -->
+  <section class="section" id="s6-fr">
+    <h2><span class="num">6</span> Installation & procédure de test</h2>
+    <ol>
+      <li>Copier les 3 fichiers générés dans le répertoire de mods du jeu :</li>
+    </ol>
+    <pre><code>...\The Blood of Dawnwalker\Dawnwalker\Content\Paks\~mods\</code></pre>
+    <ol start="2">
+      <li><strong>Important</strong> : supprimer ou déplacer les anciennes versions du mod pour éviter tout conflit de priorité au chargement du conteneur IoStore.</li>
+      <li>Lancer le jeu et tester dans l'ordre :</li>
+    </ol>
+    <ul class="checklist">
+      <li>Absence de crash au chargement du menu / de la sauvegarde.</li>
+      <li>Ouverture de l'inventaire et équipement de l'arme <em>(si la référence binaire était fausse, le jeu crasherait au moment d'équiper)</em>.</li>
+      <li>Vérification des dégâts : frapper un humain (+90 % applicables) puis un animal (+90 % applicables).</li>
+    </ul>
+  </section>
+
+  <footer class="site">
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN</p>
+  </footer>
+</div>
+
+<!-- ============================= ENGLISH ============================= -->
+<div class="content en" lang="en">
+
+  <section class="hero">
+    <p class="kicker">Ultimate Guide · Weapon modding under Unreal Engine 5.5</p>
+    <h1>Editing <code class="mono">ITM_Weapon_SwordDawnwalker5a.uasset</code></h1>
+    <p class="lead">A complete, reproducible method for adding combat modifiers (Gameplay Effects) to weapons in <em>The Blood of Dawnwalker</em> — from binary editing in UAssetGUI all the way to in-game testing.</p>
+    <div class="badges">
+      <span class="badge">Unreal Engine 5.5</span>
+      <span class="badge">IoStore / Zen container</span>
+      <span class="badge">UAssetGUI</span>
+      <span class="badge">FModel</span>
+      <span class="badge">retoc.exe</span>
+      <span class="badge neutral">Gameplay Ability System (GAS)</span>
+    </div>
+  </section>
+
+  <div class="quick">
+    <h3>⚡ In 30 seconds — the full workflow</h3>
+    <ol>
+      <li><b>Back up</b> the legacy folder (always, before any binary modification).</li>
+      <li><b>Add 4 imports</b> to the Import Data (2 pairs of Package + <code class="mono">_C</code> Class).</li>
+      <li><b>Create</b> entries 4 and 5 in <code class="mono">CustomEffectParameters</code>, then fill in <code class="mono">Effect</code> and <code class="mono">Value</code>.</li>
+      <li><b>Save, close, reopen</b> UAssetGUI and verify integrity.</li>
+      <li><b>Compile</b> with <code class="mono">retoc to-zen --version UE5_5</code>.</li>
+      <li><b>Install</b> the 3 files (<code class="mono">.utoc / .ucas / .pak</code>) into <code class="mono">Paks\~mods\</code> and test in game.</li>
+    </ol>
+  </div>
+
+  <nav class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#s1-en">Overview &amp; internal mechanics</a></li>
+      <li><a href="#s2-en">Statistics summary table</a></li>
+      <li><a href="#s3-en">Tools and work structure</a></li>
+      <li><a href="#s4-en">Step-by-step technical procedure</a></li>
+      <li><a href="#s5-en">Compiling with retoc</a></li>
+      <li><a href="#s6-en">Installation &amp; in-game testing</a></li>
+    </ol>
+  </nav>
+
+  <!-- ============ SECTION 1 ============ -->
+  <section class="section" id="s1-en">
+    <h2><span class="num">1</span> Overview &amp; internal mechanics</h2>
+
+    <h3><span class="tag">A.</span> How effects work (Gameplay Effect)</h3>
+    <p>Weapon stats and bonuses are governed by Unreal Engine's <strong>Gameplay Ability System (GAS)</strong>:</p>
+    <ul>
+      <li>The weapon asset exposes an array of structs named <code class="inline">CustomEffectParameters</code>.</li>
+      <li>Each entry in this array associates a derived Blueprint class (<code class="inline">_C</code>) with a floating-point value (<code class="inline">Value</code>) injected into the engine through the <code class="inline">Stats.CustomModifier</code> attribute.</li>
+    </ul>
+    <div class="callout info">
+      <p class="callout-title">📐 Internal value → in-game bonus mapping</p>
+      <p><code>0.409</code> corresponds to the additive multiplier of <strong>+90 %</strong> in game. Other values observed in this asset: <code>0.227</code> → +50 %, <code>-0.364</code> → −80 %.</p>
+    </div>
+
+    <h3><span class="tag">B.</span> Understanding <code class="inline">FPackageIndex</code> (the <code class="inline">Variant</code> field in UAssetGUI)</h3>
+    <p>In UAssetGUI, an <code class="inline">ObjectProperty</code> (such as the <code class="inline">Effect</code> field) does not store the class name as plain text. It uses an <strong><code class="inline">FPackageIndex</code></strong>:</p>
+    <ul>
+      <li><code>0</code>: null reference (<em>null</em>).</li>
+      <li>Positive integer (<code>&gt; 0</code>): points to the <strong>Export Data</strong> table (Index = Export − 1).</li>
+      <li><strong>Negative integer (<code>&lt; 0</code>)</strong>: points to the <strong>Import Data</strong> table.</li>
+    </ul>
+    <div class="formula">Real import index in the table <span class="res">= −Variant − 1</span></div>
+
+    <div class="callout warn">
+      <p class="callout-title">⚠️ Why not use <code>-1</code> on every row?</p>
+      <p>The value <code>-1</code> corresponds to the first import in the table (<code>GE_DamageAgainstCorruptedMultiplier_C</code>). If you set <code>-1</code> for the new entries, the game will apply <strong>the Supernatural bonus again</strong>. To target Mortals or Animals, you must point to their respective import indexes (<code>-21</code> and <code>-23</code>).</p>
+    </div>
+
+    <p><strong>Pointer resolution table for this asset:</strong></p>
+    <figure>
+      <svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="FPackageIndex resolution to the Import Data table">
+        <defs>
+          <marker id="arrE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#78716c"/>
+          </marker>
+          <marker id="arrAccE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#b3222c"/>
+          </marker>
+        </defs>
+        <text x="30" y="34" font-size="13" font-weight="700" fill="#1c1917">Variant (FPackageIndex)</text>
+        <text x="420" y="34" font-size="13" font-weight="700" fill="#1c1917">Import Data — targeted entry</text>
+        <line x1="380" y1="20" x2="380" y2="320" stroke="#e7e5e4" stroke-width="1.5"/>
+
+        <rect x="30" y="52" width="90" height="36" rx="8" fill="#f5f5f4" stroke="#d6d3d1"/>
+        <text x="75" y="75" font-size="14" font-weight="700" fill="#78716c" text-anchor="middle" font-family="monospace">-1</text>
+        <line x1="120" y1="70" x2="415" y2="70" stroke="#78716c" stroke-width="1.5" marker-end="url(#arrE)"/>
+        <text x="425" y="66" font-size="11.5" fill="#78716c" font-family="monospace">Import #0 — GE_DamageAgainstCorruptedMultiplier_C</text>
+        <text x="425" y="80" font-size="10.5" fill="#a8a29e" font-family="monospace">Supernaturals (existing)</text>
+
+        <rect x="30" y="108" width="90" height="36" rx="8" fill="#fdf1f1" stroke="#e7b6b9"/>
+        <text x="75" y="131" font-size="14" font-weight="700" fill="#b3222c" text-anchor="middle" font-family="monospace">-20</text>
+        <line x1="120" y1="126" x2="415" y2="126" stroke="#b3222c" stroke-width="1.5" marker-end="url(#arrAccE)"/>
+        <text x="425" y="122" font-size="11.5" fill="#8f1a22" font-family="monospace">Import #19 — Package …/GE_DamageAgainstUntouchedMultiplier</text>
+        <text x="425" y="136" font-size="10.5" fill="#a8a29e" font-family="monospace">Parent package (added)</text>
+
+        <rect x="30" y="164" width="90" height="36" rx="8" fill="#b3222c"/>
+        <text x="75" y="187" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" font-family="monospace">-21</text>
+        <line x1="120" y1="182" x2="415" y2="182" stroke="#b3222c" stroke-width="2" marker-end="url(#arrAccE)"/>
+        <text x="425" y="178" font-size="11.5" font-weight="700" fill="#8f1a22" font-family="monospace">Import #20 — GE_DamageAgainstUntouchedMultiplier_C</text>
+        <text x="425" y="192" font-size="10.5" fill="#a8a29e" font-family="monospace">Mortals class — used for Effect (index 4)</text>
+
+        <rect x="30" y="220" width="90" height="36" rx="8" fill="#fdf1f1" stroke="#e7b6b9"/>
+        <text x="75" y="243" font-size="14" font-weight="700" fill="#b3222c" text-anchor="middle" font-family="monospace">-22</text>
+        <line x1="120" y1="238" x2="415" y2="238" stroke="#b3222c" stroke-width="1.5" marker-end="url(#arrAccE)"/>
+        <text x="425" y="234" font-size="11.5" fill="#8f1a22" font-family="monospace">Import #21 — Package …/GE_DamageAgainstAnimalsMultiplier</text>
+        <text x="425" y="248" font-size="10.5" fill="#a8a29e" font-family="monospace">Parent package (added)</text>
+
+        <rect x="30" y="276" width="90" height="36" rx="8" fill="#b3222c"/>
+        <text x="75" y="299" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" font-family="monospace">-23</text>
+        <line x1="120" y1="294" x2="415" y2="294" stroke="#b3222c" stroke-width="2" marker-end="url(#arrAccE)"/>
+        <text x="425" y="290" font-size="11.5" font-weight="700" fill="#8f1a22" font-family="monospace">Import #22 — GE_DamageAgainstAnimalsMultiplier_C</text>
+        <text x="425" y="304" font-size="10.5" fill="#a8a29e" font-family="monospace">Animals class — used for Effect (index 5)</text>
+      </svg>
+      <figcaption>The negative pointers <code>-21</code> and <code>-23</code> target the Blueprint classes added to the Import Data.</figcaption>
+    </figure>
+
+    <table>
+      <thead>
+        <tr><th>Variant</th><th>Target in the Import Data</th><th>Role</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="mono">-1</td><td class="mono">Import #0 — GE_DamageAgainstCorruptedMultiplier_C</td><td>Existing effect (Supernaturals)</td></tr>
+        <tr class="highlight"><td class="mono">-20</td><td class="mono">Import #19 — Package /Game/_Dawnwalker/Stats/CustomItemModifiers/GE_DamageAgainstUntouchedMultiplier</td><td>Parent package (added)</td></tr>
+        <tr class="highlight"><td class="mono">-21</td><td class="mono">Import #20 — Class GE_DamageAgainstUntouchedMultiplier_C</td><td><strong>Effect of index 4 (Mortals)</strong></td></tr>
+        <tr class="highlight"><td class="mono">-22</td><td class="mono">Import #21 — Package /Game/_Dawnwalker/Stats/CustomItemModifiers/GE_DamageAgainstAnimalsMultiplier</td><td>Parent package (added)</td></tr>
+        <tr class="highlight"><td class="mono">-23</td><td class="mono">Import #22 — Class GE_DamageAgainstAnimalsMultiplier_C</td><td><strong>Effect of index 5 (Animals)</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span class="tag">C.</span> The UE5 container format (Zen / IoStore)</h3>
+    <p>UE5.5 uses the IoStore container made of three inseparable files:</p>
+    <ol>
+      <li><code class="inline">.utoc</code> — Table of contents / chunk catalog.</li>
+      <li><code class="inline">.ucas</code> — Compressed binary data.</li>
+      <li><code class="inline">.pak</code> — Compatibility index.</li>
+    </ol>
+    <figure>
+      <svg viewBox="0 0 880 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mod compilation pipeline">
+        <defs>
+          <marker id="arr2E" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#b3222c"/>
+          </marker>
+        </defs>
+        <rect x="15" y="30" width="170" height="62" rx="10" fill="#f5f5f4" stroke="#d6d3d1"/>
+        <text x="100" y="56" font-size="12" font-weight="700" fill="#1c1917" text-anchor="middle" font-family="monospace">mod_legacy_folder\</text>
+        <text x="100" y="74" font-size="10.5" fill="#78716c" text-anchor="middle" font-family="monospace">legacy .uasset tree</text>
+
+        <line x1="185" y1="61" x2="235" y2="61" stroke="#b3222c" stroke-width="2" marker-end="url(#arr2E)"/>
+
+        <rect x="240" y="22" width="200" height="78" rx="10" fill="#b3222c"/>
+        <text x="340" y="48" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="monospace">retoc.exe to-zen</text>
+        <text x="340" y="66" font-size="11" fill="#fecaca" text-anchor="middle" font-family="monospace">--version UE5_5</text>
+        <text x="340" y="84" font-size="10.5" fill="#fecaca" text-anchor="middle" font-family="monospace">Zen / IoStore conversion</text>
+
+        <line x1="440" y1="61" x2="490" y2="61" stroke="#b3222c" stroke-width="2" marker-end="url(#arr2E)"/>
+
+        <rect x="495" y="14" width="170" height="94" rx="10" fill="#fdf1f1" stroke="#e7b6b9"/>
+        <text x="580" y="36" font-size="11.5" font-weight="700" fill="#8f1a22" text-anchor="middle" font-family="monospace">3 output files</text>
+        <text x="580" y="56" font-size="11" fill="#8f1a22" text-anchor="middle" font-family="monospace">Sword_…_P.utoc</text>
+        <text x="580" y="72" font-size="11" fill="#8f1a22" text-anchor="middle" font-family="monospace">Sword_…_P.ucas</text>
+        <text x="580" y="88" font-size="11" fill="#8f1a22" text-anchor="middle" font-family="monospace">Sword_…_P.pak</text>
+
+        <line x1="665" y1="61" x2="715" y2="61" stroke="#b3222c" stroke-width="2" marker-end="url(#arr2E)"/>
+
+        <rect x="720" y="30" width="145" height="62" rx="10" fill="#1c1917"/>
+        <text x="792" y="54" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" font-family="monospace">Content\Paks\</text>
+        <text x="792" y="72" font-size="11" fill="#fca5a5" text-anchor="middle" font-family="monospace">~mods\</text>
+      </svg>
+      <figcaption>Full pipeline: legacy tree → retoc conversion → IoStore container → game mods folder.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ SECTION 2 ============ -->
+  <section class="section" id="s2-en">
+    <h2><span class="num">2</span> Statistics summary table</h2>
+    <p>Target final state of the <code class="inline">CustomEffectParameters</code> array after modification:</p>
+    <table>
+      <thead>
+        <tr><th>Index</th><th>Target stat</th><th>Effect</th><th>Variant</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="mono">0</td><td>Swordmastery Cooldown −80 %</td><td class="mono">GE_SwordSkillCooldownMultiplier_C</td><td class="mono">-4</td><td class="mono">-0.364</td></tr>
+        <tr><td class="mono">1</td><td>Critical Hit Chance +50 %</td><td class="mono">GE_MeleeCriticalHitChanceMultiplier_C</td><td class="mono">-2</td><td class="mono">0.227</td></tr>
+        <tr><td class="mono">2</td><td>Critical Hit Damage +50 %</td><td class="mono">GE_SwordCritDamageMultiplier_C</td><td class="mono">-3</td><td class="mono">0.227</td></tr>
+        <tr><td class="mono">3</td><td>Damage vs Supernatural +90 %</td><td class="mono">GE_DamageAgainstCorruptedMultiplier_C</td><td class="mono">-1</td><td class="mono">0.409</td></tr>
+        <tr class="highlight"><td class="mono">4</td><td><strong>Damage vs Mortals +90 %</strong></td><td class="mono">GE_DamageAgainstUntouchedMultiplier_C</td><td class="mono"><span class="pill new">-21</span></td><td class="mono"><strong>0.409</strong></td></tr>
+        <tr class="highlight"><td class="mono">5</td><td><strong>Damage vs Animals +90 %</strong></td><td class="mono">GE_DamageAgainstAnimalsMultiplier_C</td><td class="mono"><span class="pill new">-23</span></td><td class="mono"><strong>0.409</strong></td></tr>
+      </tbody>
+    </table>
+    <div class="callout warn">
+      <p class="callout-title">📌 Technical note</p>
+      <p>In the game's internal files, the humans/mortals category is named <strong><code>Untouched</code></strong>. Never use an invented name such as <code>DamageVsMortals</code>.</p>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 3 ============ -->
+  <section class="section" id="s3-en">
+    <h2><span class="num">3</span> Tools and work structure</h2>
+
+    <h3>Required tools</h3>
+    <div class="card">
+      <ol>
+        <li><strong>UAssetGUI</strong> — Binary editor for Unreal assets.<br/>
+          <span class="mono" style="font-size:.83rem;color:#78716c">Engine version: 5.5 · Mapping: Dawnwalker</span></li>
+        <li><strong>FModel</strong> — Original asset explorer (used to extract exact package paths).</li>
+        <li><strong>retoc.exe</strong> — Compiler used to repack the legacy tree into the Zen / IoStore format.</li>
+      </ol>
+    </div>
+
+    <h3>Strict folder structure</h3>
+    <p>The tree <strong>must</strong> reproduce the game's internal path from a root folder (e.g. <code class="inline">dossier_mod_legacy</code>):</p>
+    <pre><code>dossier_mod_legacy\
+└── Dawnwalker\
+    └── Content\
+        └── _Dawnwalker\
+            └── Inventory\
+                └── Items\
+                    └── ITM_Weapon_SwordDawnwalker5a.uasset</code></pre>
+    <div class="callout warn">
+      <p class="callout-title">⚠️ Golden rule</p>
+      <p>One folder level too many or too few and the game will not find the replaced asset: the path must reflect <em>exactly</em> the internal structure of the original pak.</p>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 4 ============ -->
+  <section class="section" id="s4-en">
+    <h2><span class="num">4</span> Step-by-step technical procedure</h2>
+
+    <div class="step">
+      <h3><span class="stepnum">1</span> Safety backup</h3>
+      <p>Always copy your working folder before any binary modification:</p>
+      <pre><code class="cmd">xcopy /E /I "D:\Downloads\dossier_mod_legacy" "D:\Downloads\dossier_mod_legacy_BACKUP"</code></pre>
+    </div>
+
+    <div class="step">
+      <h3><span class="stepnum">2</span> Adding the 4 imports to the Import Data</h3>
+      <p>For Unreal Engine to know which classes to load, each Blueprint class (<code class="inline">BlueprintGeneratedClass</code>) <strong>AND</strong> its parent package (<code class="inline">Package</code>) must be declared.</p>
+      <ol>
+        <li>Open <code class="inline">ITM_Weapon_SwordDawnwalker5a.uasset</code> in UAssetGUI.</li>
+        <li>In the left panel, click <strong>Import Data</strong>.</li>
+        <li>Scroll down to the last existing row (index <code class="mono">-19</code>).</li>
+        <li>On the empty row at the very bottom (marked <code class="mono">*</code>), add the 4 entries in sequence:</li>
+      </ol>
+      <table>
+        <thead>
+          <tr><th>Auto row</th><th>ClassPackage</th><th>ClassName</th><th>OuterIndex</th><th>ObjectName</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono">-20</td><td class="mono">/Script/CoreUObject</td><td class="mono">Package</td><td class="mono">0</td><td class="mono">/Game/_Dawnwalker/Stats/CustomItemModifiers/GE_DamageAgainstUntouchedMultiplier</td></tr>
+          <tr><td class="mono">-21</td><td class="mono">/Script/Engine</td><td class="mono">BlueprintGeneratedClass</td><td class="mono">-20</td><td class="mono">GE_DamageAgainstUntouchedMultiplier_C</td></tr>
+          <tr><td class="mono">-22</td><td class="mono">/Script/CoreUObject</td><td class="mono">Package</td><td class="mono">0</td><td class="mono">/Game/_Dawnwalker/Stats/CustomItemModifiers/GE_DamageAgainstAnimalsMultiplier</td></tr>
+          <tr><td class="mono">-23</td><td class="mono">/Script/Engine</td><td class="mono">BlueprintGeneratedClass</td><td class="mono">-22</td><td class="mono">GE_DamageAgainstAnimalsMultiplier_C</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Technical explanation of the fields:</strong></p>
+      <ul>
+        <li><strong>OuterIndex</strong> — Links the class to its parent folder/package. Row <code class="mono">-21</code> has an <code class="inline">OuterIndex</code> of <code class="mono">-20</code> to indicate it belongs to the package of row <code class="mono">-20</code>.</li>
+        <li><strong><code>_C</code> suffix</strong> — Designates the generated Blueprint class required for GAS execution.</li>
+      </ul>
+      <div class="callout warn">
+        <p class="callout-title">🚫 Never use the <code>Default__…</code> prefix</p>
+        <p>It points to the <em>Class Default Object</em> (CDO), which would cause the effect application to fail.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <h3><span class="stepnum">3</span> Automatic Name Map check</h3>
+      <p>Click <strong>Name Map</strong> in the left menu:</p>
+      <ul>
+        <li>Verify that the 4 new text strings appear at the very bottom of the table (e.g. indexes <code class="mono">76</code> to <code class="mono">79</code>).</li>
+      </ul>
+      <div class="callout tip">
+        <p class="callout-title">💡 Good to know</p>
+        <p>UAssetGUI adds them <strong>automatically</strong> when the imports are created. Do not add them manually.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <h3><span class="stepnum">4</span> Creating the parent structs in CustomEffectParameters</h3>
+      <ol>
+        <li>Expand the tree on the left:</li>
+      </ol>
+      <pre><code>Export Data
+└── Export 1 (ITM_Weapon_SwordDawnwalker5a)
+    └── ItemWeaponDataAsset
+        └── CustomEffectParameters (4)</code></pre>
+      <ol start="2">
+        <li>Click <code class="inline">CustomEffectParameters (4)</code>.</li>
+        <li>On the <code class="mono">*</code> row of the right-hand grid, create index 4:</li>
+      </ol>
+      <div class="fieldrow"><span class="k">Name</span><span class="v">4</span></div>
+      <div class="fieldrow"><span class="k">Type</span><span class="v">StructProperty</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v">CustomEffectParameter</span></div>
+      <p style="font-size:.85rem;color:#78716c">→ Confirm with Enter.</p>
+      <ol start="4">
+        <li>On the new <code class="mono">*</code> row, create index 5:</li>
+      </ol>
+      <div class="fieldrow"><span class="k">Name</span><span class="v">5</span></div>
+      <div class="fieldrow"><span class="k">Type</span><span class="v">StructProperty</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v">CustomEffectParameter</span></div>
+      <p style="font-size:.85rem;color:#78716c">→ Confirm with Enter.</p>
+      <div class="callout info">
+        <p class="callout-title">✔ Expected result</p>
+        <p>The tree on the left now shows <code>CustomEffectParameters (6)</code> with <code>4 (0)</code> and <code>5 (0)</code> — structs created but empty.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <h3><span class="stepnum">5</span> Filling in the child fields</h3>
+
+      <h3 style="font-size:1rem">A. Fill in index 4 (Mortals / Untouched)</h3>
+      <ol>
+        <li>Select <code class="mono">4 (0)</code> in the left tree.</li>
+        <li>On the <code class="mono">*</code> row (1st property — Effect):</li>
+      </ol>
+      <div class="fieldrow"><span class="k">Name</span><span class="v">Effect</span></div>
+      <div class="fieldrow"><span class="k">Type</span><span class="v">ObjectProperty</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v acc">-21</span><span style="font-size:.8rem;color:#78716c">(points directly to the Untouched class created in the Import Data)</span></div>
+      <div class="fieldrow"><span class="k">Value</span><span class="v" style="color:#78716c">Leave empty (UAssetGUI automatically resolves the name GE_DamageAgainstUntouchedMultiplier_C)</span></div>
+      <p style="font-size:.85rem;color:#78716c">→ Confirm with Enter.</p>
+      <ol start="3">
+        <li>On the <code class="mono">*</code> row (2nd property — Value):</li>
+      </ol>
+      <div class="fieldrow"><span class="k">Name</span><span class="v">Value</span></div>
+      <div class="fieldrow"><span class="k">Type</span><span class="v">FloatProperty</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v" style="color:#78716c">(leave empty)</span></div>
+      <div class="fieldrow"><span class="k">Value</span><span class="v acc">0.409</span></div>
+      <p style="font-size:.85rem;color:#78716c">→ Confirm with Enter. The node becomes <code class="mono">4 (2)</code>.</p>
+
+      <h3 style="font-size:1rem">B. Fill in index 5 (Animals)</h3>
+      <ol>
+        <li>Select <code class="mono">5 (0)</code> in the left tree.</li>
+        <li>On the <code class="mono">*</code> row (1st property — Effect):</li>
+      </ol>
+      <div class="fieldrow"><span class="k">Name</span><span class="v">Effect</span></div>
+      <div class="fieldrow"><span class="k">Type</span><span class="v">ObjectProperty</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v acc">-23</span><span style="font-size:.8rem;color:#78716c">(points to the Animals class)</span></div>
+      <div class="fieldrow"><span class="k">Value</span><span class="v" style="color:#78716c">Leave empty. Confirm with Enter.</span></div>
+      <ol start="3">
+        <li>On the <code class="mono">*</code> row (2nd property — Value):</li>
+      </ol>
+      <div class="fieldrow"><span class="k">Name</span><span class="v">Value</span></div>
+      <div class="fieldrow"><span class="k">Type</span><span class="v">FloatProperty</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v" style="color:#78716c">(leave empty)</span></div>
+      <div class="fieldrow"><span class="k">Value</span><span class="v acc">0.409</span></div>
+      <p style="font-size:.85rem;color:#78716c">→ Confirm with Enter. The node becomes <code class="mono">5 (2)</code>.</p>
+    </div>
+
+    <div class="step">
+      <h3><span class="stepnum">6</span> Saving and integrity check</h3>
+      <ol>
+        <li>Do <strong>File &gt; Save</strong> (Ctrl+S).</li>
+        <li><strong>Close UAssetGUI completely.</strong></li>
+        <li><strong>Reopen the file.</strong></li>
+        <li>Check that:</li>
+      </ol>
+      <ul class="checklist">
+        <li><code class="inline">CustomEffectParameters (6)</code> is properly preserved.</li>
+        <li>Nodes 4 and 5 correctly show <code class="mono">(2)</code> children.</li>
+        <li>The class names <code class="mono">GE_DamageAgainstUntouchedMultiplier_C</code> and <code class="mono">GE_DamageAgainstAnimalsMultiplier_C</code> clearly display in green/blue next to their <code class="inline">ObjectProperty</code>.</li>
+      </ul>
+      <div class="callout tip">
+        <p class="callout-title">💡 Why close and reopen?</p>
+        <p>Reopening forces UAssetGUI to re-read the file as it was written to disk. If a write was corrupted (missing name, orphaned index), that is when it shows up — well before a potential in-game crash.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 5 ============ -->
+  <section class="section" id="s5-en">
+    <h2><span class="num">5</span> Compiling with retoc (Zen format)</h2>
+    <p>Open a command prompt (<code class="inline">cmd.exe</code>) in the folder containing <code class="inline">retoc.exe</code>. Run the command on <strong>one single continuous line</strong>:</p>
+    <pre><code class="cmd">.\retoc.exe to-zen --version UE5_5 "D:\Downloads\dossier_mod_legacy" "Sword_Of_SaintM_OP_P.utoc"</code></pre>
+    <div class="callout warn">
+      <p class="callout-title">⚠️ Note</p>
+      <p>Under <code>cmd.exe</code>, do not use PowerShell continuation characters such as backticks <code>`</code>, or you will get "command not found" errors.</p>
+    </div>
+    <h3>Checking the output files</h3>
+    <p><code class="inline">retoc</code> generates three files in the folder:</p>
+    <ul class="checklist">
+      <li><code class="mono">Sword_Of_SaintM_OP_P.utoc</code></li>
+      <li><code class="mono">Sword_Of_SaintM_OP_P.ucas</code></li>
+      <li><code class="mono">Sword_Of_SaintM_OP_P.pak</code></li>
+    </ul>
+    <p>Verify that all three files are <strong>larger than 0 KB</strong>.</p>
+  </section>
+
+  <!-- ============ SECTION 6 ============ -->
+  <section class="section" id="s6-en">
+    <h2><span class="num">6</span> Installation &amp; testing procedure</h2>
+    <ol>
+      <li>Copy the 3 generated files into the game's mods directory:</li>
+    </ol>
+    <pre><code>...\The Blood of Dawnwalker\Dawnwalker\Content\Paks\~mods\</code></pre>
+    <ol start="2">
+      <li><strong>Important</strong>: delete or move old versions of the mod to avoid any loading-priority conflict with the IoStore container.</li>
+      <li>Launch the game and test in this order:</li>
+    </ol>
+    <ul class="checklist">
+      <li>No crash when loading the menu / the save file.</li>
+      <li>Open the inventory and equip the weapon <em>(if the binary reference was wrong, the game would crash when equipping)</em>.</li>
+      <li>Check damage: hit a human (+90 % applies) then an animal (+90 % applies).</li>
+    </ul>
+  </section>
+
+  <footer class="site">
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition</p>
+  </footer>
+</div>
+
+</main>
+
+<script>
+  var btnFr = document.getElementById('btn-fr');
+  var btnEn = document.getElementById('btn-en');
+
+  function setLang(l){
+    document.body.classList.toggle('lang-fr', l === 'fr');
+    document.body.classList.toggle('lang-en', l === 'en');
+    document.documentElement.lang = l;
+    btnFr.classList.toggle('active', l === 'fr');
+    btnEn.classList.toggle('active', l === 'en');
+    var els = document.querySelectorAll('[data-fr]');
+    for (var i = 0; i < els.length; i++){
+      els[i].textContent = (l === 'fr') ? els[i].getAttribute('data-fr') : els[i].getAttribute('data-en');
+    }
+    try { localStorage.setItem('dawnwalker-guide-lang', l); } catch(e){}
+  }
+
+  btnFr.addEventListener('click', function(){ setLang('fr'); });
+  btnEn.addEventListener('click', function(){ setLang('en'); });
+
+  var saved = 'fr';
+  try { saved = localStorage.getItem('dawnwalker-guide-lang') || 'fr'; } catch(e){}
+  setLang(saved);
+
+  document.getElementById('btn-print').addEventListener('click', function(){ window.print(); });
+</script>
+
+</body>
+</html>
