@@ -241,6 +241,9 @@
   /* ---------- Figures ---------- */
   figure{margin:1.6rem 0}
   figure svg{width:100%; height:auto; display:block; background:var(--surface); border:1px solid var(--panel-border); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm)}
+  /* Annotations SVG : la couleur grise codée en dur suit le thème (CSS écrase l'attribut fill) */
+  figure svg [fill="#78716c"]{fill:var(--muted)}
+  figure svg [stroke="#78716c"]{stroke:var(--muted)}
   figcaption{font-size:.82rem; color:var(--muted); text-align:center; margin-top:.5rem}
 
   /* ---------- Checklist ---------- */
@@ -568,7 +571,7 @@
     <div class="card">
       <ol>
         <li><strong>UAssetGUI</strong> — Éditeur binaire d'assets Unreal.<br/>
-          <span class="mono" style="font-size:.83rem;color:#78716c">Version moteur : 5.5 · Mapping : Dawnwalker</span></li>
+          <span class="mono" style="font-size:.83rem;color:var(--muted)">Version moteur : 5.5 · Mapping : Dawnwalker</span></li>
         <li><strong>FModel</strong> — Explorateur d'assets d'origine (utilisé pour extraire les chemins de packages exacts).</li>
         <li><strong>retoc.exe</strong> — Compilateur pour réempaqueter l'arborescence legacy vers le format Zen / IoStore.</li>
       </ol>
@@ -662,14 +665,14 @@
       <div class="fieldrow"><span class="k">Name</span><span class="v">4</span></div>
       <div class="fieldrow"><span class="k">Type</span><span class="v">StructProperty</span></div>
       <div class="fieldrow"><span class="k">Variant</span><span class="v">CustomEffectParameter</span></div>
-      <p style="font-size:.85rem;color:#78716c">→ Valider avec Entrée.</p>
+      <p style="font-size:.85rem;color:var(--muted)">→ Valider avec Entrée.</p>
       <ol start="4">
         <li>Sur la nouvelle ligne <code class="mono">*</code>, créer l'index 5 :</li>
       </ol>
       <div class="fieldrow"><span class="k">Name</span><span class="v">5</span></div>
       <div class="fieldrow"><span class="k">Type</span><span class="v">StructProperty</span></div>
       <div class="fieldrow"><span class="k">Variant</span><span class="v">CustomEffectParameter</span></div>
-      <p style="font-size:.85rem;color:#78716c">→ Valider avec Entrée.</p>
+      <p style="font-size:.85rem;color:var(--muted)">→ Valider avec Entrée.</p>
       <div class="callout info">
         <p class="callout-title">✔ Résultat attendu</p>
         <p>L'arbre à gauche indique désormais <code>CustomEffectParameters (6)</code> avec <code>4 (0)</code> et <code>5 (0)</code> — structures créées mais vides.</p>
@@ -686,17 +689,17 @@
       </ol>
       <div class="fieldrow"><span class="k">Name</span><span class="v">Effect</span></div>
       <div class="fieldrow"><span class="k">Type</span><span class="v">ObjectProperty</span></div>
-      <div class="fieldrow"><span class="k">Variant</span><span class="v acc">-21</span><span style="font-size:.8rem;color:#78716c">(pointe directement vers la classe Untouched créée dans l'Import Data)</span></div>
-      <div class="fieldrow"><span class="k">Value</span><span class="v" style="color:#78716c">Laisser vide (UAssetGUI résout automatiquement le nom GE_DamageAgainstUntouchedMultiplier_C)</span></div>
-      <p style="font-size:.85rem;color:#78716c">→ Valider avec Entrée.</p>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v acc">-21</span><span style="font-size:.8rem;color:var(--muted)">(pointe directement vers la classe Untouched créée dans l'Import Data)</span></div>
+      <div class="fieldrow"><span class="k">Value</span><span class="v" style="color:var(--muted)">Laisser vide (UAssetGUI résout automatiquement le nom GE_DamageAgainstUntouchedMultiplier_C)</span></div>
+      <p style="font-size:.85rem;color:var(--muted)">→ Valider avec Entrée.</p>
       <ol start="3">
         <li>Sur la ligne <code class="mono">*</code> (2ᵉ propriété — Valeur) :</li>
       </ol>
       <div class="fieldrow"><span class="k">Name</span><span class="v">Value</span></div>
       <div class="fieldrow"><span class="k">Type</span><span class="v">FloatProperty</span></div>
-      <div class="fieldrow"><span class="k">Variant</span><span class="v" style="color:#78716c">(laisser vide)</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v" style="color:var(--muted)">(laisser vide)</span></div>
       <div class="fieldrow"><span class="k">Value</span><span class="v acc">0.409</span></div>
-      <p style="font-size:.85rem;color:#78716c">→ Valider avec Entrée. Le nœud devient <code class="mono">4 (2)</code>.</p>
+      <p style="font-size:.85rem;color:var(--muted)">→ Valider avec Entrée. Le nœud devient <code class="mono">4 (2)</code>.</p>
 
       <h3 style="font-size:1rem">B. Remplir l'index 5 (Animaux / Animals)</h3>
       <ol>
@@ -705,16 +708,16 @@
       </ol>
       <div class="fieldrow"><span class="k">Name</span><span class="v">Effect</span></div>
       <div class="fieldrow"><span class="k">Type</span><span class="v">ObjectProperty</span></div>
-      <div class="fieldrow"><span class="k">Variant</span><span class="v acc">-23</span><span style="font-size:.8rem;color:#78716c">(pointe vers la classe Animals)</span></div>
-      <div class="fieldrow"><span class="k">Value</span><span class="v" style="color:#78716c">Laisser vide. Valider avec Entrée.</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v acc">-23</span><span style="font-size:.8rem;color:var(--muted)">(pointe vers la classe Animals)</span></div>
+      <div class="fieldrow"><span class="k">Value</span><span class="v" style="color:var(--muted)">Laisser vide. Valider avec Entrée.</span></div>
       <ol start="3">
         <li>Sur la ligne <code class="mono">*</code> (2ᵉ propriété — Valeur) :</li>
       </ol>
       <div class="fieldrow"><span class="k">Name</span><span class="v">Value</span></div>
       <div class="fieldrow"><span class="k">Type</span><span class="v">FloatProperty</span></div>
-      <div class="fieldrow"><span class="k">Variant</span><span class="v" style="color:#78716c">(laisser vide)</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v" style="color:var(--muted)">(laisser vide)</span></div>
       <div class="fieldrow"><span class="k">Value</span><span class="v acc">0.409</span></div>
-      <p style="font-size:.85rem;color:#78716c">→ Valider avec Entrée. Le nœud devient <code class="mono">5 (2)</code>.</p>
+      <p style="font-size:.85rem;color:var(--muted)">→ Valider avec Entrée. Le nœud devient <code class="mono">5 (2)</code>.</p>
     </div>
 
     <div class="step">
@@ -740,6 +743,7 @@
   <!-- ============ SECTION 5 ============ -->
   <section class="section" id="s5-fr">
     <h2><span class="num">5</span> Compilation avec retoc (format Zen)</h2>
+    <div class="card">
     <p>Ouvrir une invite de commandes (<code class="inline">cmd.exe</code>) dans le dossier où se trouve <code class="inline">retoc.exe</code>. Exécuter la commande sur <strong>une seule ligne continue</strong> :</p>
     <pre><code class="cmd">.\retoc.exe to-zen --version UE5_5 "D:\Downloads\dossier_mod_legacy" "Sword_Of_SaintM_OP_P.utoc"</code></pre>
     <div class="callout warn">
@@ -754,11 +758,13 @@
       <li><code class="mono">Sword_Of_SaintM_OP_P.pak</code></li>
     </ul>
     <p>Vérifie que les trois fichiers ont une taille <strong>supérieure à 0 Ko</strong>.</p>
+    </div>
   </section>
 
   <!-- ============ SECTION 6 ============ -->
   <section class="section" id="s6-fr">
     <h2><span class="num">6</span> Installation & procédure de test</h2>
+    <div class="card">
     <ol>
       <li>Copier les 3 fichiers générés dans le répertoire de mods du jeu :</li>
     </ol>
@@ -772,10 +778,11 @@
       <li>Ouverture de l'inventaire et équipement de l'arme <em>(si la référence binaire était fausse, le jeu crasherait au moment d'équiper)</em>.</li>
       <li>Vérification des dégâts : frapper un humain (+90 % applicables) puis un animal (+90 % applicables).</li>
     </ul>
+    </div>
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.2 (blocs de champs réparés, hover dynamique)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.3 (lisibilité nuit, sections 5-6 en cartes)</p>
   </footer>
 </div>
 
@@ -984,7 +991,7 @@
     <div class="card">
       <ol>
         <li><strong>UAssetGUI</strong> — Binary editor for Unreal assets.<br/>
-          <span class="mono" style="font-size:.83rem;color:#78716c">Engine version: 5.5 · Mapping: Dawnwalker</span></li>
+          <span class="mono" style="font-size:.83rem;color:var(--muted)">Engine version: 5.5 · Mapping: Dawnwalker</span></li>
         <li><strong>FModel</strong> — Original asset explorer (used to extract exact package paths).</li>
         <li><strong>retoc.exe</strong> — Compiler used to repack the legacy tree into the Zen / IoStore format.</li>
       </ol>
@@ -1078,14 +1085,14 @@
       <div class="fieldrow"><span class="k">Name</span><span class="v">4</span></div>
       <div class="fieldrow"><span class="k">Type</span><span class="v">StructProperty</span></div>
       <div class="fieldrow"><span class="k">Variant</span><span class="v">CustomEffectParameter</span></div>
-      <p style="font-size:.85rem;color:#78716c">→ Confirm with Enter.</p>
+      <p style="font-size:.85rem;color:var(--muted)">→ Confirm with Enter.</p>
       <ol start="4">
         <li>On the new <code class="mono">*</code> row, create index 5:</li>
       </ol>
       <div class="fieldrow"><span class="k">Name</span><span class="v">5</span></div>
       <div class="fieldrow"><span class="k">Type</span><span class="v">StructProperty</span></div>
       <div class="fieldrow"><span class="k">Variant</span><span class="v">CustomEffectParameter</span></div>
-      <p style="font-size:.85rem;color:#78716c">→ Confirm with Enter.</p>
+      <p style="font-size:.85rem;color:var(--muted)">→ Confirm with Enter.</p>
       <div class="callout info">
         <p class="callout-title">✔ Expected result</p>
         <p>The tree on the left now shows <code>CustomEffectParameters (6)</code> with <code>4 (0)</code> and <code>5 (0)</code> — structs created but empty.</p>
@@ -1102,17 +1109,17 @@
       </ol>
       <div class="fieldrow"><span class="k">Name</span><span class="v">Effect</span></div>
       <div class="fieldrow"><span class="k">Type</span><span class="v">ObjectProperty</span></div>
-      <div class="fieldrow"><span class="k">Variant</span><span class="v acc">-21</span><span style="font-size:.8rem;color:#78716c">(points directly to the Untouched class created in the Import Data)</span></div>
-      <div class="fieldrow"><span class="k">Value</span><span class="v" style="color:#78716c">Leave empty (UAssetGUI automatically resolves the name GE_DamageAgainstUntouchedMultiplier_C)</span></div>
-      <p style="font-size:.85rem;color:#78716c">→ Confirm with Enter.</p>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v acc">-21</span><span style="font-size:.8rem;color:var(--muted)">(points directly to the Untouched class created in the Import Data)</span></div>
+      <div class="fieldrow"><span class="k">Value</span><span class="v" style="color:var(--muted)">Leave empty (UAssetGUI automatically resolves the name GE_DamageAgainstUntouchedMultiplier_C)</span></div>
+      <p style="font-size:.85rem;color:var(--muted)">→ Confirm with Enter.</p>
       <ol start="3">
         <li>On the <code class="mono">*</code> row (2nd property — Value):</li>
       </ol>
       <div class="fieldrow"><span class="k">Name</span><span class="v">Value</span></div>
       <div class="fieldrow"><span class="k">Type</span><span class="v">FloatProperty</span></div>
-      <div class="fieldrow"><span class="k">Variant</span><span class="v" style="color:#78716c">(leave empty)</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v" style="color:var(--muted)">(leave empty)</span></div>
       <div class="fieldrow"><span class="k">Value</span><span class="v acc">0.409</span></div>
-      <p style="font-size:.85rem;color:#78716c">→ Confirm with Enter. The node becomes <code class="mono">4 (2)</code>.</p>
+      <p style="font-size:.85rem;color:var(--muted)">→ Confirm with Enter. The node becomes <code class="mono">4 (2)</code>.</p>
 
       <h3 style="font-size:1rem">B. Fill in index 5 (Animals)</h3>
       <ol>
@@ -1121,16 +1128,16 @@
       </ol>
       <div class="fieldrow"><span class="k">Name</span><span class="v">Effect</span></div>
       <div class="fieldrow"><span class="k">Type</span><span class="v">ObjectProperty</span></div>
-      <div class="fieldrow"><span class="k">Variant</span><span class="v acc">-23</span><span style="font-size:.8rem;color:#78716c">(points to the Animals class)</span></div>
-      <div class="fieldrow"><span class="k">Value</span><span class="v" style="color:#78716c">Leave empty. Confirm with Enter.</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v acc">-23</span><span style="font-size:.8rem;color:var(--muted)">(points to the Animals class)</span></div>
+      <div class="fieldrow"><span class="k">Value</span><span class="v" style="color:var(--muted)">Leave empty. Confirm with Enter.</span></div>
       <ol start="3">
         <li>On the <code class="mono">*</code> row (2nd property — Value):</li>
       </ol>
       <div class="fieldrow"><span class="k">Name</span><span class="v">Value</span></div>
       <div class="fieldrow"><span class="k">Type</span><span class="v">FloatProperty</span></div>
-      <div class="fieldrow"><span class="k">Variant</span><span class="v" style="color:#78716c">(leave empty)</span></div>
+      <div class="fieldrow"><span class="k">Variant</span><span class="v" style="color:var(--muted)">(leave empty)</span></div>
       <div class="fieldrow"><span class="k">Value</span><span class="v acc">0.409</span></div>
-      <p style="font-size:.85rem;color:#78716c">→ Confirm with Enter. The node becomes <code class="mono">5 (2)</code>.</p>
+      <p style="font-size:.85rem;color:var(--muted)">→ Confirm with Enter. The node becomes <code class="mono">5 (2)</code>.</p>
     </div>
 
     <div class="step">
@@ -1156,6 +1163,7 @@
   <!-- ============ SECTION 5 ============ -->
   <section class="section" id="s5-en">
     <h2><span class="num">5</span> Compiling with retoc (Zen format)</h2>
+    <div class="card">
     <p>Open a command prompt (<code class="inline">cmd.exe</code>) in the folder containing <code class="inline">retoc.exe</code>. Run the command on <strong>one single continuous line</strong>:</p>
     <pre><code class="cmd">.\retoc.exe to-zen --version UE5_5 "D:\Downloads\dossier_mod_legacy" "Sword_Of_SaintM_OP_P.utoc"</code></pre>
     <div class="callout warn">
@@ -1170,11 +1178,13 @@
       <li><code class="mono">Sword_Of_SaintM_OP_P.pak</code></li>
     </ul>
     <p>Verify that all three files are <strong>larger than 0 KB</strong>.</p>
+    </div>
   </section>
 
   <!-- ============ SECTION 6 ============ -->
   <section class="section" id="s6-en">
     <h2><span class="num">6</span> Installation &amp; testing procedure</h2>
+    <div class="card">
     <ol>
       <li>Copy the 3 generated files into the game's mods directory:</li>
     </ol>
@@ -1188,10 +1198,11 @@
       <li>Open the inventory and equip the weapon <em>(if the binary reference was wrong, the game would crash when equipping)</em>.</li>
       <li>Check damage: hit a human (+90 % applies) then an animal (+90 % applies).</li>
     </ul>
+    </div>
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.2 (fixed field rows, dynamic hover)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.3 (night readability, sections 5-6 carded)</p>
   </footer>
 </div>
 
