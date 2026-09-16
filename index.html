@@ -336,6 +336,12 @@
       font-size:.68rem; font-weight:800; color:var(--tip-ink);
     }
 
+    /* Valeurs des fiches copiables : Name/Type/Variant/Value se copient
+       une par une — workflow UAssetGUI champ par champ. */
+    .fieldrow .v{cursor:copy}
+    .fieldrow .v.copied{background:var(--accent-soft); border-radius:6px}
+    .fieldrow .v.copied::after{content:" ✓"; color:var(--tip-ink); font-weight:800}
+
     /* Sommaire vivant : la section en cours de lecture s'illumine */
     .toc a{transition:color .2s ease}
     .toc a.active{color:var(--accent); font-weight:700; border-color:var(--accent)}
@@ -886,7 +892,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.7 (cellules des tableaux copiables, correctif impression PDF en thème nuit)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.8 (valeurs des fiches de champs copiables)</p>
   </footer>
 </div>
 
@@ -1316,7 +1322,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.7 (copyable table cells, night-theme PDF print fix)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.8 (copyable field-row values)</p>
   </footer>
 </div>
 
@@ -1366,10 +1372,11 @@
 
   /* ---- v2.5 ---- */
 
-  /* Copier en un clic : chaque bloc de commande ET chaque cellule de donnée
-     (td.mono : ClassName, OuterIndex, ObjectName, valeurs…) se copie dans le
+  /* Copier en un clic : chaque bloc de commande, chaque cellule de donnée
+     (td.mono : ClassName, OuterIndex, ObjectName, valeurs…) et chaque valeur
+     de fiche (.fieldrow .v : Type, Variant, Value…) se copie dans le
      presse-papier, avec un badge « ✓ Copié » qui s'affiche un instant. */
-  var pres = document.querySelectorAll('pre, td.mono');
+  var pres = document.querySelectorAll('pre, td.mono, .fieldrow .v');
   for (var pi = 0; pi < pres.length; pi++){
     pres[pi].addEventListener('click', function(){
       var el = this;
