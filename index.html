@@ -245,10 +245,13 @@
   /* ---------- Figures ---------- */
   figure{margin:1.6rem 0}
   figure svg{width:100%; height:auto; display:block; background:var(--surface); border:1px solid var(--panel-border); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm)}
+  /* En nuit, les schémas deviennent des cartes sombres comme les blocs de code :
+     les « exemples » (formules, commandes, diagrammes) partagent le même noir-violet. */
+  body.night figure svg{background:rgba(17,12,26,.9)}
   /* Schémas SVG adaptatifs : le CSS écrase les attributs fill/stroke codés en dur —
      chaque couleur d'origine est redirigée vers une variable de thème.
      Jour = valeurs d'origine ; nuit = encre claire, boîtes translucides, accents roses. */
-  figure svg [fill="#1c1917"]{fill:var(--svg-ink)}
+  figure svg text[fill="#1c1917"]{fill:var(--svg-ink)}
   figure svg [fill="#78716c"]{fill:var(--muted)}
   figure svg [fill="#a8a29e"]{fill:var(--svg-sub)}
   figure svg [fill="#f5f5f4"]{fill:var(--svg-box)}
@@ -333,12 +336,6 @@
       0%,100%{box-shadow:inset 3px 0 0 var(--accent)}
       50%{box-shadow:inset 3px 0 0 var(--accent), inset 0 0 22px var(--accent-soft)}
     }
-
-    /* Mode révision : surligne toutes les valeurs clés du guide d'un coup */
-    body.review .fieldrow .v.acc{background:var(--accent-soft); outline:2px dashed var(--accent); outline-offset:2px; border-radius:6px; padding:0 .35rem}
-    body.review .formula .res{text-shadow:0 0 16px #fcd34d}
-    body.review .quick b{text-shadow:0 0 12px var(--text-glow)}
-    body.review tr.highlight td{color:var(--accent-ink)}
 
     /* Accessibilité : sans animation préférée, pas de pulsation ni de filament */
     @media (prefers-reduced-motion:reduce){
@@ -435,7 +432,6 @@
   <div class="brand"><span class="dot"></span> Guide Modding <small>· UE 5.5 · The Blood of Dawnwalker</small></div>
   <div class="actions">
     <button class="btn" id="btn-theme" title="Thème jour / nuit">🌙</button>
-    <button class="btn" id="btn-review" data-fr="🎯 Révision" data-en="🎯 Review">🎯 Révision</button>
     <div class="lang-switch">
       <button id="btn-fr" class="active">FR</button>
       <button id="btn-en">EN</button>
@@ -877,7 +873,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.5 (projecteur, progression, copie en clic, sommaire vivant, mode révision, exemples sombres)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.6 (schémas sombres en nuit, correctif boîte noire, mode révision retiré)</p>
   </footer>
 </div>
 
@@ -1307,7 +1303,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.5 (spotlight, progress bar, copy-on-click, live TOC, review mode, dark examples)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.6 (dark diagrams in night, black box fix, review mode removed)</p>
   </footer>
 </div>
 
@@ -1391,20 +1387,6 @@
   window.addEventListener('scroll', updateToc, {passive:true});
   window.addEventListener('load', updateToc);
   updateToc();
-
-  /* Mode révision : surligne les valeurs clés (0.409, -21, -23…), mémorisé. */
-  var btnReview = document.getElementById('btn-review');
-  function setReview(on){
-    document.body.classList.toggle('review', on);
-    btnReview.classList.toggle('btn-primary', on);
-    try { localStorage.setItem('dawnwalker-guide-review', on ? '1' : '0'); } catch(e){}
-  }
-  btnReview.addEventListener('click', function(){
-    setReview(!document.body.classList.contains('review'));
-  });
-  var savedReview = '0';
-  try { savedReview = localStorage.getItem('dawnwalker-guide-review') || '0'; } catch(e){}
-  setReview(savedReview === '1');
 </script>
 
 </body>
