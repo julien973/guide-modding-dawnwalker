@@ -11,6 +11,11 @@
     --accent:#b3222c; --accent-soft:#fdf1f1; --accent-ink:#8f1a22;
     --border:#ece4da; --border-strong:#ddd2c4;
     --radius:16px; --radius-sm:12px;
+    --panel-border:rgba(236,228,218,.8);
+    --th-bg:#292524; --th-ink:#fafaf9;
+    --row-even:#faf5ef; --row-hover:#fdf8f2;
+    --quick-grad:linear-gradient(180deg,#fff,#fdf6f1);
+    --fieldrow-bg:#faf5ef; --inline-bg:#f0eeec; --stepnum-bg:#1c1917;
     --shadow-sm:0 1px 2px rgba(28,25,23,.05), 0 4px 14px rgba(28,25,23,.06);
     --shadow-md:0 2px 6px rgba(28,25,23,.06), 0 16px 40px rgba(28,25,23,.12);
     --code-bg:#1c1917; --code-ink:#f5f5f4; --code-accent:#fca5a5;
@@ -23,7 +28,8 @@
   body{
     margin:0;
     background:
-      radial-gradient(1100px 480px at 50% -120px, rgba(179,34,44,.08), transparent 70%),
+      radial-gradient(900px 480px at 85% -5%, rgba(245,158,11,.16), transparent 60%),
+      radial-gradient(700px 420px at 12% 18%, rgba(194,64,73,.13), transparent 62%),
       linear-gradient(180deg, #f8f2ec 0%, #f6efe9 40%, #f3eae2 100%);
     background-attachment:fixed;
     color:var(--ink);
@@ -65,12 +71,12 @@
   .btn-primary:hover{background:var(--accent-ink); color:#fff}
 
   /* ---------- Layout ---------- */
-  main{max-width:920px; margin:0 auto; padding:0 1.4rem 4rem}
+  main{max-width:920px; margin:0 auto; padding:0 1.4rem 0}
   .content{padding-top:2.2rem}
 
   /* ---------- Hero ---------- */
   .hero{
-    background:var(--surface); border:1px solid rgba(236,228,218,.8); border-radius:20px;
+    background:var(--surface); border:1px solid var(--panel-border); border-radius:20px;
     padding:2.4rem 2.2rem; margin-bottom:2.2rem; position:relative; overflow:hidden;
     box-shadow:var(--shadow-md);
   }
@@ -90,7 +96,7 @@
 
   /* ---------- TOC ---------- */
   .toc{
-    background:var(--surface); border:1px solid rgba(236,228,218,.8); border-radius:var(--radius);
+    background:var(--surface); border:1px solid var(--panel-border); border-radius:var(--radius);
     padding:1.2rem 1.5rem; margin-bottom:2.4rem; box-shadow:var(--shadow-sm);
   }
   .toc h2{margin:0 0 .6rem; font-size:.8rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted)}
@@ -120,7 +126,7 @@
 
   /* ---------- Cards & callouts ---------- */
   .card{
-    background:var(--surface); border:1px solid rgba(236,228,218,.8); border-radius:var(--radius);
+    background:var(--surface); border:1px solid var(--panel-border); border-radius:var(--radius);
     padding:1.3rem 1.5rem; margin:1.2rem 0; box-shadow:var(--shadow-sm);
   }
   .callout{
@@ -135,7 +141,7 @@
   .callout code{background:rgba(0,0,0,.06); padding:.05rem .35rem; border-radius:4px}
 
   /* ---------- Quick summary ---------- */
-  .quick{background:linear-gradient(180deg,#fff,#fdf6f1); border:1px solid rgba(236,228,218,.8); border-radius:var(--radius); padding:1.4rem 1.6rem; margin:0 0 1rem; box-shadow:var(--shadow-sm)}
+  .quick{background:var(--quick-grad); border:1px solid var(--panel-border); border-radius:var(--radius); padding:1.4rem 1.6rem; margin:0 0 1rem; box-shadow:var(--shadow-sm)}
   .quick h3{margin:.2rem 0 .8rem; color:var(--accent-ink)}
   .quick ol{margin:0}
   .quick b{color:var(--accent-ink)}
@@ -149,15 +155,15 @@
   .formula .res{color:#fcd34d}
 
   /* ---------- Tables ---------- */
-  table{width:100%; border-collapse:collapse; margin:1.2rem 0; font-size:.9rem; background:var(--surface); border-radius:var(--radius-sm); overflow:hidden; border:1px solid rgba(236,228,218,.8); box-shadow:var(--shadow-sm)}
+  table{width:100%; border-collapse:collapse; margin:1.2rem 0; font-size:.9rem; background:var(--surface); border-radius:var(--radius-sm); overflow:hidden; border:1px solid var(--panel-border); box-shadow:var(--shadow-sm)}
   th{
-    background:#292524; color:#fafaf9; text-align:left; padding:.65rem .8rem;
+    background:var(--th-bg); color:var(--th-ink); text-align:left; padding:.65rem .8rem;
     font-size:.75rem; text-transform:uppercase; letter-spacing:.06em;
   }
   td{padding:.6rem .8rem; border-top:1px solid var(--border); vertical-align:top; overflow-wrap:anywhere; word-break:break-word}
   tbody tr{transition:background .15s ease}
-  tbody tr:nth-child(even){background:#faf5ef}
-  tbody tr:hover{background:#fdf8f2}
+  tbody tr:nth-child(even){background:var(--row-even)}
+  tbody tr:hover{background:var(--row-hover)}
   td.mono, th.mono{font-family:Consolas, monospace; font-size:.83rem}
   .pill{
     display:inline-block; padding:.1rem .55rem; border-radius:999px;
@@ -175,28 +181,28 @@
   }
   pre .c{color:#a8a29e}
   pre .a{color:var(--code-accent)}
-  code.inline{background:#f0eeec; border:1px solid var(--border); padding:.08rem .4rem; border-radius:5px; font-size:.85em}
+  code.inline{background:var(--inline-bg); border:1px solid var(--border); padding:.08rem .4rem; border-radius:5px; font-size:.85em}
   pre code .cmd{color:#93c5fd}
 
   /* ---------- Steps ---------- */
   .step{
-    background:var(--surface); border:1px solid rgba(236,228,218,.8); border-radius:var(--radius);
+    background:var(--surface); border:1px solid var(--panel-border); border-radius:var(--radius);
     padding:1.3rem 1.5rem; margin:1.4rem 0; position:relative; box-shadow:var(--shadow-sm);
   }
   .step h3{margin:.1rem 0 .2rem; display:flex; align-items:center; gap:.7rem; font-size:1.05rem}
   .step .stepnum{
-    background:#1c1917; color:#fff; width:1.7rem; height:1.7rem; border-radius:50%;
+    background:var(--stepnum-bg); color:#fff; width:1.7rem; height:1.7rem; border-radius:50%;
     display:inline-flex; align-items:center; justify-content:center;
     font-size:.8rem; font-weight:800; flex:0 0 auto;
   }
-  .fieldrow{display:flex; gap:.5rem; flex-wrap:wrap; margin:.5rem 0; padding:.4rem .6rem; background:#faf5ef; border-radius:8px}
+  .fieldrow{display:flex; gap:.5rem; flex-wrap:wrap; margin:.5rem 0; padding:.4rem .6rem; background:var(--fieldrow-bg); border-radius:8px}
   .fieldrow .k{font-family:Consolas, monospace; font-size:.82rem; color:var(--muted); min-width:5.5rem}
   .fieldrow .v{font-family:Consolas, monospace; font-size:.85rem; font-weight:600}
   .fieldrow .v.acc{color:var(--accent-ink)}
 
   /* ---------- Figures ---------- */
   figure{margin:1.6rem 0}
-  figure svg{width:100%; height:auto; display:block; background:var(--surface); border:1px solid rgba(236,228,218,.8); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm)}
+  figure svg{width:100%; height:auto; display:block; background:var(--surface); border:1px solid var(--panel-border); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm)}
   figcaption{font-size:.82rem; color:var(--muted); text-align:center; margin-top:.5rem}
 
   /* ---------- Checklist ---------- */
@@ -216,6 +222,127 @@
   /* ---------- Language visibility ---------- */
   body.lang-en .content.fr{display:none}
   body.lang-fr .content.en{display:none}
+
+  /* ---------- Ambiances : descente au crépuscule (aurore → nuit) ---------- */
+  /* Chaque grande section porte son environnement (fond + orbes lumineux).
+     Les dégradés se rejoignent pour une descente continue en scrollant.
+     Isolé dans @media screen : le PDF/impression garde le thème clair. */
+  @media screen{
+    /* Pleine largeur : la section déborde du conteneur centré jusqu'aux bords */
+    .env{
+      margin-inline:calc(50% - 50vw);
+      padding-inline:calc(50vw - 50%);
+    }
+    .section.env{margin:0; padding-block:3.6rem}
+    footer.site.env{margin-top:0; padding-top:2.8rem; padding-bottom:3.6rem}
+
+    /* Surfaces en verre dépoli : le flou révèle les orbes qui passent derrière */
+    .hero, .toc, .quick, .card, .step, .callout, .formula, pre, figure svg, table{
+      backdrop-filter:blur(12px) saturate(1.35);
+      -webkit-backdrop-filter:blur(12px) saturate(1.35);
+    }
+    /* Zone d'ouverture (aurore) : verre blanc translucide */
+    .hero, .toc, .quick{background:rgba(255,255,255,.55)}
+    .quick{background:linear-gradient(180deg, rgba(255,255,255,.6), rgba(253,246,241,.5))}
+
+    /* ---- Étape 1 · Aurore (§1) ---- */
+    .env-1{
+      --surface:rgba(255,255,255,.55); --panel-border:rgba(255,255,255,.72);
+      --row-even:rgba(255,255,255,.4); --row-hover:rgba(255,255,255,.65);
+      --inline-bg:rgba(255,255,255,.5); --fieldrow-bg:rgba(255,255,255,.35);
+      --code-bg:rgba(28,25,23,.85);
+      background:
+        radial-gradient(720px 400px at 88% 8%, rgba(245,158,11,.18), transparent 62%),
+        radial-gradient(680px 420px at 8% 60%, rgba(194,64,73,.13), transparent 62%),
+        linear-gradient(180deg, #f6efe9 0%, #f1e4d4 100%);
+    }
+
+    /* ---- Étape 2 · Fin d'après-midi (§2) ---- */
+    .env-2{
+      --ink:#43302a; --muted:#7c5a48;
+      --surface:rgba(255,248,238,.5); --panel-border:rgba(255,240,220,.66);
+      --border:#eadbcb; --border-strong:#dcc7ae;
+      --row-even:rgba(255,255,255,.35); --row-hover:rgba(255,255,255,.62);
+      --th-bg:#43302a; --th-ink:#fff7ed; --stepnum-bg:#43302a;
+      --inline-bg:rgba(255,255,255,.5); --fieldrow-bg:rgba(255,255,255,.35);
+      --quick-grad:linear-gradient(180deg, rgba(255,250,242,.6), rgba(255,243,227,.42));
+      --code-bg:rgba(40,30,26,.88); --code-ink:#f5efe7;
+      background:
+        radial-gradient(700px 420px at 85% 12%, rgba(194,64,73,.22), transparent 62%),
+        radial-gradient(640px 400px at 10% 72%, rgba(240,150,60,.26), transparent 62%),
+        linear-gradient(180deg, #f1e4d4 0%, #e7c9a7 100%);
+    }
+
+    /* ---- Étape 3 · Crépuscule ambre (§3) ---- */
+    .env-3{
+      --ink:#3f2a24; --muted:#6e4f42;
+      --surface:rgba(255,248,238,.42); --panel-border:rgba(255,240,220,.6);
+      --border:#e4cdb2; --border-strong:#d3b695;
+      --row-even:rgba(255,255,255,.3); --row-hover:rgba(255,255,255,.58);
+      --th-bg:#43302a; --th-ink:#fff7ed; --stepnum-bg:#43302a;
+      --inline-bg:rgba(255,255,255,.46); --fieldrow-bg:rgba(255,255,255,.32);
+      --quick-grad:linear-gradient(180deg, rgba(255,250,242,.55), rgba(255,243,227,.35));
+      --code-bg:rgba(38,27,23,.88); --code-ink:#f5efe7;
+      --shadow-sm:0 1px 2px rgba(60,30,15,.08), 0 4px 14px rgba(60,30,15,.1);
+      --shadow-md:0 2px 6px rgba(60,30,15,.08), 0 16px 40px rgba(60,30,15,.16);
+      background:
+        radial-gradient(720px 430px at 12% 8%, rgba(240,150,60,.35), transparent 62%),
+        radial-gradient(680px 420px at 88% 62%, rgba(194,64,73,.3), transparent 62%),
+        linear-gradient(180deg, #e7c9a7 0%, #b97f6a 100%);
+    }
+
+    /* ---- Palette sombre commune (étapes 4-5-6 : nuit) ---- */
+    .env-4, .env-5, .env-6{
+      --ink:#f5e8e0; --muted:#c9a99e;
+      --accent:#e0686f; --accent-ink:#f09a9e; --accent-soft:rgba(224,104,111,.16);
+      --surface:rgba(255,235,225,.09); --panel-border:rgba(255,225,210,.22);
+      --border:rgba(255,225,210,.18); --border-strong:rgba(255,225,210,.3);
+      --row-even:rgba(255,255,255,.05); --row-hover:rgba(255,255,255,.1);
+      --th-bg:rgba(22,9,11,.55); --th-ink:#f5e8e0; --stepnum-bg:var(--accent);
+      --inline-bg:rgba(255,255,255,.12); --fieldrow-bg:rgba(255,255,255,.07);
+      --quick-grad:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
+      --code-bg:rgba(255,255,255,.08); --code-ink:#eadfd9;
+      --info-bg:rgba(59,130,246,.16); --info-ink:#93c5fd; --info-border:#3b82f6;
+      --warn-bg:rgba(249,115,22,.16); --warn-ink:#fdba74; --warn-border:#f97316;
+      --tip-bg:rgba(34,197,94,.16); --tip-ink:#86efac; --tip-border:#22c55e;
+      --shadow-sm:0 1px 2px rgba(10,3,5,.2), 0 4px 14px rgba(10,3,5,.25);
+      --shadow-md:0 2px 6px rgba(10,3,5,.25), 0 16px 40px rgba(10,3,5,.4);
+    }
+
+    /* ---- Étape 4 · Rouge bordeaux (§4) ---- */
+    .env-4{
+      background:
+        radial-gradient(760px 440px at 82% 10%, rgba(224,104,111,.4), transparent 62%),
+        radial-gradient(600px 400px at 15% 70%, rgba(240,150,60,.22), transparent 62%),
+        linear-gradient(180deg, #7a463d 0%, #3a1d21 100%);
+    }
+
+    /* ---- Étape 5 · Bordeaux sombre (§5) ---- */
+    .env-5{
+      --surface:rgba(255,235,225,.08); --panel-border:rgba(255,225,210,.18);
+      background:
+        radial-gradient(700px 420px at 18% 15%, rgba(224,90,99,.32), transparent 62%),
+        radial-gradient(560px 380px at 85% 70%, rgba(240,158,11,.14), transparent 62%),
+        linear-gradient(180deg, #3a1d21 0%, #1c1315 100%);
+    }
+
+    /* ---- Étape 6 · Nuit profonde (§6 + pied de page) ---- */
+    .env-6{
+      --surface:rgba(255,235,225,.07); --panel-border:rgba(255,225,210,.16);
+      background:
+        radial-gradient(800px 420px at 50% 112%, rgba(194,64,73,.3), transparent 65%),
+        linear-gradient(180deg, #1c1315 0%, #0d0b0a 100%);
+    }
+
+    /* Topbar : suit l'ambiance de la zone située sous la barre (classe posée par JS) */
+    .topbar{transition:background .5s ease, border-color .5s ease}
+    body.env-dark .topbar{
+      background:rgba(22,16,15,.74);
+      border-bottom-color:rgba(255,225,210,.14);
+    }
+    body.env-dark .brand small{color:#a8a29e}
+    body.env-dark .btn{background:rgba(255,255,255,.08); color:#e7e5e4; border-color:rgba(255,255,255,.18)}
+  }
 
   /* ---------- Print ---------- */
   @page{size:A4; margin:13mm}
@@ -291,7 +418,7 @@
   </nav>
 
   <!-- ============ SECTION 1 ============ -->
-  <section class="section" id="s1-fr">
+  <section class="section env env-1" id="s1-fr">
     <h2><span class="num">1</span> Vue d'ensemble & mécanique interne</h2>
 
     <h3><span class="tag">A.</span> Le fonctionnement des effets (Gameplay Effect)</h3>
@@ -429,7 +556,7 @@
   </section>
 
   <!-- ============ SECTION 2 ============ -->
-  <section class="section" id="s2-fr">
+  <section class="section env env-2" id="s2-fr">
     <h2><span class="num">2</span> Tableau récapitulatif des statistiques</h2>
     <p>État final visé du tableau <code class="inline">CustomEffectParameters</code> après modification :</p>
     <table>
@@ -452,7 +579,7 @@
   </section>
 
   <!-- ============ SECTION 3 ============ -->
-  <section class="section" id="s3-fr">
+  <section class="section env env-3" id="s3-fr">
     <h2><span class="num">3</span> Outils et structure de travail</h2>
 
     <h3>Outils requis</h3>
@@ -481,7 +608,7 @@
   </section>
 
   <!-- ============ SECTION 4 ============ -->
-  <section class="section" id="s4-fr">
+  <section class="section env env-4" id="s4-fr">
     <h2><span class="num">4</span> Procédure technique pas à pas</h2>
 
     <div class="step">
@@ -629,7 +756,7 @@
   </section>
 
   <!-- ============ SECTION 5 ============ -->
-  <section class="section" id="s5-fr">
+  <section class="section env env-5" id="s5-fr">
     <h2><span class="num">5</span> Compilation avec retoc (format Zen)</h2>
     <p>Ouvrir une invite de commandes (<code class="inline">cmd.exe</code>) dans le dossier où se trouve <code class="inline">retoc.exe</code>. Exécuter la commande sur <strong>une seule ligne continue</strong> :</p>
     <pre><code class="cmd">.\retoc.exe to-zen --version UE5_5 "D:\Downloads\dossier_mod_legacy" "Sword_Of_SaintM_OP_P.utoc"</code></pre>
@@ -648,7 +775,7 @@
   </section>
 
   <!-- ============ SECTION 6 ============ -->
-  <section class="section" id="s6-fr">
+  <section class="section env env-6" id="s6-fr">
     <h2><span class="num">6</span> Installation & procédure de test</h2>
     <ol>
       <li>Copier les 3 fichiers générés dans le répertoire de mods du jeu :</li>
@@ -665,8 +792,8 @@
     </ul>
   </section>
 
-  <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v1.3 (design moderne, tableaux réparés)</p>
+  <footer class="site env env-6">
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v1.4 (descente au crépuscule, verre)</p>
   </footer>
 </div>
 
@@ -712,7 +839,7 @@
   </nav>
 
   <!-- ============ SECTION 1 ============ -->
-  <section class="section" id="s1-en">
+  <section class="section env env-1" id="s1-en">
     <h2><span class="num">1</span> Overview &amp; internal mechanics</h2>
 
     <h3><span class="tag">A.</span> How effects work (Gameplay Effect)</h3>
@@ -845,7 +972,7 @@
   </section>
 
   <!-- ============ SECTION 2 ============ -->
-  <section class="section" id="s2-en">
+  <section class="section env env-2" id="s2-en">
     <h2><span class="num">2</span> Statistics summary table</h2>
     <p>Target final state of the <code class="inline">CustomEffectParameters</code> array after modification:</p>
     <table>
@@ -868,7 +995,7 @@
   </section>
 
   <!-- ============ SECTION 3 ============ -->
-  <section class="section" id="s3-en">
+  <section class="section env env-3" id="s3-en">
     <h2><span class="num">3</span> Tools and work structure</h2>
 
     <h3>Required tools</h3>
@@ -897,7 +1024,7 @@
   </section>
 
   <!-- ============ SECTION 4 ============ -->
-  <section class="section" id="s4-en">
+  <section class="section env env-4" id="s4-en">
     <h2><span class="num">4</span> Step-by-step technical procedure</h2>
 
     <div class="step">
@@ -1045,7 +1172,7 @@
   </section>
 
   <!-- ============ SECTION 5 ============ -->
-  <section class="section" id="s5-en">
+  <section class="section env env-5" id="s5-en">
     <h2><span class="num">5</span> Compiling with retoc (Zen format)</h2>
     <p>Open a command prompt (<code class="inline">cmd.exe</code>) in the folder containing <code class="inline">retoc.exe</code>. Run the command on <strong>one single continuous line</strong>:</p>
     <pre><code class="cmd">.\retoc.exe to-zen --version UE5_5 "D:\Downloads\dossier_mod_legacy" "Sword_Of_SaintM_OP_P.utoc"</code></pre>
@@ -1064,7 +1191,7 @@
   </section>
 
   <!-- ============ SECTION 6 ============ -->
-  <section class="section" id="s6-en">
+  <section class="section env env-6" id="s6-en">
     <h2><span class="num">6</span> Installation &amp; testing procedure</h2>
     <ol>
       <li>Copy the 3 generated files into the game's mods directory:</li>
@@ -1081,8 +1208,8 @@
     </ul>
   </section>
 
-  <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v1.3 (modern design, fixed tables)</p>
+  <footer class="site env env-6">
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v1.4 (twilight descent, glass)</p>
   </footer>
 </div>
 
@@ -1113,6 +1240,24 @@
   setLang(saved);
 
   document.getElementById('btn-print').addEventListener('click', function(){ window.print(); });
+
+  /* Topbar : suit l'ambiance de la section qui passe sous la barre.
+     IntersectionObserver observe une bande fine juste sous la topbar ;
+     si une section sombre (étapes 4-6) y entre, la barre passe en verre sombre. */
+  (function(){
+    var zones = document.querySelectorAll('.env-4, .env-5, .env-6');
+    if (!('IntersectionObserver' in window) || !zones.length) return;
+    var visible = [];
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        var i = visible.indexOf(e.target);
+        if (e.isIntersecting && i === -1) visible.push(e.target);
+        if (!e.isIntersecting && i !== -1) visible.splice(i, 1);
+      });
+      document.body.classList.toggle('env-dark', visible.length > 0);
+    }, {rootMargin: '-64px 0px -75% 0px'});
+    for (var i = 0; i < zones.length; i++) io.observe(zones[i]);
+  })();
 </script>
 
 </body>
