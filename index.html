@@ -19,7 +19,7 @@
     --th-bg:#3a322c; --th-ink:#faf6ef; --stepnum-bg:#b3453e;
     --row-even:rgba(166,138,105,.08); --row-hover:rgba(166,138,105,.15);
     --quick-grad:linear-gradient(180deg, rgba(255,255,255,calc(var(--surface-alpha) + .05)), rgba(255,255,255,calc(var(--surface-alpha) - .06)));
-    --fieldrow-bg:rgba(255,255,255,.4); --inline-bg:rgba(90,70,40,.08);
+    --fieldrow-bg:var(--row-even); --inline-bg:rgba(90,70,40,.08);
     --shadow-sm:0 1px 2px rgba(28,25,23,.05), 0 4px 14px rgba(28,25,23,.06);
     --shadow-md:0 2px 6px rgba(28,25,23,.06), 0 16px 40px rgba(28,25,23,.12);
     --code-bg:#1c1917; --code-ink:#f5f5f4; --code-accent:#fca5a5;
@@ -46,7 +46,7 @@
     --th-bg:rgba(18,13,28,.55); --th-ink:#f5e8e0; --stepnum-bg:var(--accent);
     --row-even:rgba(255,255,255,.05); --row-hover:rgba(255,255,255,.1);
     --quick-grad:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
-    --fieldrow-bg:rgba(255,255,255,.07); --inline-bg:rgba(255,255,255,.12);
+    --fieldrow-bg:var(--row-even); --inline-bg:rgba(255,255,255,.12);
     --shadow-sm:0 1px 2px rgba(10,3,5,.2), 0 4px 14px rgba(10,3,5,.25);
     --shadow-md:0 2px 6px rgba(10,3,5,.25), 0 16px 40px rgba(10,3,5,.4);
     --code-bg:rgba(255,255,255,.08); --code-ink:#eadfd9; --code-accent:#fca5a5;
@@ -232,7 +232,8 @@
     display:inline-flex; align-items:center; justify-content:center;
     font-size:.8rem; font-weight:800; flex:0 0 auto;
   }
-  .fieldrow{display:flex; gap:.5rem; flex-wrap:wrap; margin:.5rem 0; padding:.4rem .6rem; background:var(--fieldrow-bg); border-radius:8px}
+  .fieldrow{display:flex; gap:.5rem; flex-wrap:wrap; margin:.5rem 0; padding:.4rem .6rem; background:var(--fieldrow-bg); border:1px solid var(--panel-border); border-radius:8px; transition:background .15s ease, border-color .15s ease}
+  .fieldrow:hover{background:var(--row-hover); border-color:var(--border-strong)}
   .fieldrow .k{font-family:Consolas, monospace; font-size:.82rem; color:var(--muted); min-width:5.5rem}
   .fieldrow .v{font-family:Consolas, monospace; font-size:.85rem; font-weight:600}
   .fieldrow .v.acc{color:var(--accent-ink)}
@@ -774,7 +775,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.1 (cartes vivantes, contraste adaptatif)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.2 (blocs de champs réparés, hover dynamique)</p>
   </footer>
 </div>
 
@@ -1190,7 +1191,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.1 (living cards, adaptive contrast)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.2 (fixed field rows, dynamic hover)</p>
   </footer>
 </div>
 
