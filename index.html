@@ -309,11 +309,15 @@
     p:hover, li:hover, td:hover, th:hover, figcaption:hover, .formula:hover,
     .fieldrow:hover .k, .fieldrow:hover .v{text-shadow:0 0 12px var(--text-glow)}
 
-    /* Mode projecteur : la carte survolée garde le focus, les autres s'effacent
-       légèrement (sélecteur :has() — CSS natif, zéro JavaScript) */
-    .content .card, .content .step{transition:opacity .3s ease, filter .3s ease}
-    .content:has(.card:hover) .card:not(:hover),
-    .content:has(.step:hover) .step:not(:hover){opacity:.68; filter:saturate(.8)}
+    /* Mode projecteur (allégé) : seule la carte survolée réagit — liseré renforcé
+       + halo lumineux. Plus d'atténuation des autres cartes : elle s'appliquait
+       à une vingtaine de surfaces en verre simultanément et forçait le recalcul
+       du flou à chaque frame (trait parasite en haut de page pendant le scroll).
+       Le halo positif s'applique à TOUS les panneaux, y compris hero/sommaire/résumé. */
+    .hero, .toc, .quick, .content .card, .content .step{transition:border-color .25s ease, box-shadow .25s ease}
+    .hero:hover, .toc:hover, .quick:hover, .content .card:hover, .content .step:hover{
+      border-color:var(--border-strong); box-shadow:var(--shadow-md), var(--halo);
+    }
 
     /* Barre de progression : suit la lecture via scroll-timeline (repli : masquée) */
     @supports (animation-timeline: scroll()){
@@ -901,7 +905,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.11 (correctif trait clair parasite au défilement : couches GPU dédiées)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.12 (projecteur allégé : halo au survol de chaque panneau, plus d'atténuation collective)</p>
   </footer>
 </div>
 
@@ -1331,7 +1335,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.11 (fix for stray light streak while scrolling: dedicated GPU layers)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.12 (lighter spotlight: hover halo on every panel, no more collective dimming)</p>
   </footer>
 </div>
 
