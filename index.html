@@ -469,7 +469,11 @@
     <div class="step">
       <h3><span class="stepnum">1</span> Sauvegarde de sécurité</h3>
       <p>Copie toujours ton dossier de travail avant toute modification binaire :</p>
-      <pre><code class="cmd">xcopy /E /I "D:\Downloads\dossier_mod_legacy" "D:\Downloads\dossier_mod_legacy_BACKUP"</code></pre>
+      <pre><code class="cmd">robocopy "D:\Downloads\dossier_mod_legacy" "D:\Downloads\dossier_mod_legacy_BACKUP" /E</code></pre>
+      <div class="callout tip">
+        <p class="callout-title">💡 Pourquoi robocopy plutôt que xcopy ?</p>
+        <p><code>robocopy</code> est l'outil de copie moderne de Windows : il ne s'interrompt pas à la première erreur rencontrée, préserve les attributs et les horodatages des fichiers, et gère les chemins longs. Le paramètre <code>/E</code> copie tous les sous-dossiers, y compris les vides — exactement ce qu'il faut pour sauvegarder une arborescence de mod complète.</p>
+      </div>
     </div>
 
     <div class="step">
@@ -644,7 +648,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v1.1 (robocopy)</p>
   </footer>
 </div>
 
@@ -881,7 +885,11 @@
     <div class="step">
       <h3><span class="stepnum">1</span> Safety backup</h3>
       <p>Always copy your working folder before any binary modification:</p>
-      <pre><code class="cmd">xcopy /E /I "D:\Downloads\dossier_mod_legacy" "D:\Downloads\dossier_mod_legacy_BACKUP"</code></pre>
+      <pre><code class="cmd">robocopy "D:\Downloads\dossier_mod_legacy" "D:\Downloads\dossier_mod_legacy_BACKUP" /E</code></pre>
+      <div class="callout tip">
+        <p class="callout-title">💡 Why robocopy instead of xcopy?</p>
+        <p><code>robocopy</code> is Windows' modern copy tool: it does not stop at the first error, preserves file attributes and timestamps, and handles long paths. The <code>/E</code> parameter copies all subdirectories, including empty ones — exactly what you need to back up a complete mod tree.</p>
+      </div>
     </div>
 
     <div class="step">
@@ -1056,7 +1064,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v1.1 (robocopy)</p>
   </footer>
 </div>
 
