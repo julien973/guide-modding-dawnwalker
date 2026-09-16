@@ -259,6 +259,7 @@
 
     /* ---- Étape 2 · Fin d'après-midi (§2) ---- */
     .env-2{
+      color:var(--ink);
       --ink:#43302a; --muted:#7c5a48;
       --surface:rgba(255,250,244,.82); --panel-border:rgba(255,240,220,.66);
       --border:#eadbcb; --border-strong:#dcc7ae;
@@ -275,6 +276,7 @@
 
     /* ---- Étape 3 · Crépuscule ambre (§3) ---- */
     .env-3{
+      color:var(--ink);
       --ink:#3f2a24; --muted:#6e4f42;
       --surface:rgba(255,250,242,.8); --panel-border:rgba(255,240,220,.6);
       --border:#e4cdb2; --border-strong:#d3b695;
@@ -293,9 +295,10 @@
 
     /* ---- Palette sombre commune (étapes 4-5-6 : nuit) ---- */
     .env-4, .env-5, .env-6{
-      --ink:#f5e8e0; --muted:#c9a99e;
+      color:var(--ink);
+      --ink:#faf3ee; --muted:#d4b8ae;
       --accent:#e0686f; --accent-ink:#f09a9e; --accent-soft:rgba(224,104,111,.16);
-      --surface:rgba(26,17,16,.72); --panel-border:rgba(255,225,210,.22);
+      --surface:rgba(26,17,16,.8); --panel-border:rgba(255,225,210,.22);
       --border:rgba(255,225,210,.18); --border-strong:rgba(255,225,210,.3);
       --row-even:rgba(255,255,255,.05); --row-hover:rgba(255,255,255,.1);
       --th-bg:rgba(22,9,11,.55); --th-ink:#f5e8e0; --stepnum-bg:var(--accent);
@@ -319,7 +322,7 @@
 
     /* ---- Étape 5 · Bordeaux sombre (§5) ---- */
     .env-5{
-      --surface:rgba(26,17,16,.7); --panel-border:rgba(255,225,210,.18);
+      --surface:rgba(26,17,16,.78); --panel-border:rgba(255,225,210,.18);
       background:
         radial-gradient(700px 420px at 18% 15%, rgba(224,90,99,.2), transparent 62%),
         radial-gradient(560px 380px at 85% 70%, rgba(240,158,11,.1), transparent 62%),
@@ -328,7 +331,7 @@
 
     /* ---- Étape 6 · Nuit profonde (§6 + pied de page) ---- */
     .env-6{
-      --surface:rgba(26,17,16,.68); --panel-border:rgba(255,225,210,.16);
+      --surface:rgba(26,17,16,.76); --panel-border:rgba(255,225,210,.16);
       background:
         radial-gradient(800px 420px at 50% 112%, rgba(194,64,73,.18), transparent 65%),
         linear-gradient(180deg, #1c1315 0%, #0d0b0a 100%);
@@ -793,7 +796,7 @@
   </section>
 
   <footer class="site env env-6">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v1.5 (verre léger, correctif mise en page)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v1.6 (correctif lisibilité sections sombres)</p>
   </footer>
 </div>
 
@@ -1209,7 +1212,7 @@
   </section>
 
   <footer class="site env env-6">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v1.5 (light glass, layout fix)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v1.6 (dark sections readability fix)</p>
   </footer>
 </div>
 
