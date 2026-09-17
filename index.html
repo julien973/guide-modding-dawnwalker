@@ -232,6 +232,10 @@
     th{padding:.5rem .6rem}
     td.mono, th.mono{font-size:.74rem}
   }
+  /* Safari iOS « gonfle » parfois le texte des blocs plus larges que
+     l'écran (tableaux défilables) : on désactive cette inflation pour
+     que la taille du texte reste celle définie ci-dessus. */
+  html{-webkit-text-size-adjust:100%; text-size-adjust:100%}
   th{
     background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.02) 55%, rgba(0,0,0,.10)), var(--th-bg); color:var(--th-ink); text-align:left; padding:.65rem .8rem;
     font-size:.75rem; text-transform:uppercase; letter-spacing:.06em;
@@ -299,6 +303,38 @@
   figure svg [stroke="#b3222c"]{stroke:var(--accent)}
   figure svg marker path[fill="#b3222c"]{fill:var(--accent)}
   figcaption{font-size:.82rem; color:var(--muted); text-align:center; margin-top:.5rem}
+
+  /* Schémas agrandissables : un clic ouvre le schéma en plein écran
+     (lightbox ci-dessous). Le badge 🔍 signale que c'est cliquable. */
+  figure.zoomable{cursor:zoom-in; position:relative}
+  figure.zoomable::after{
+    content:"🔍"; position:absolute; top:.55rem; right:.65rem; z-index:2;
+    width:1.9rem; height:1.9rem; display:flex; align-items:center; justify-content:center;
+    font-size:.9rem; background:var(--surface); border:1px solid var(--border);
+    border-radius:8px; box-shadow:var(--shadow-sm); pointer-events:none; opacity:.9;
+  }
+
+  /* ---------- Lightbox (zoom plein écran des schémas) ----------
+     Le SVG déplacé ici garde ses variables de thème (il reste dans un
+     élément figure). Sur mobile il est affiché ~2,4× plus large que
+     l'écran et se parcourt au doigt ; sur PC il est limité à 1400 px. */
+  #lightbox{
+    position:fixed; inset:0; z-index:1000; display:none;
+    background:rgba(10,8,14,.88); cursor:zoom-out;
+  }
+  #lightbox.open{display:flex; align-items:center; justify-content:center}
+  #lightbox .lb-scroll{
+    overflow:auto; max-width:100%; max-height:100vh;
+    padding:1.6rem 1.2rem; -webkit-overflow-scrolling:touch;
+  }
+  #lightbox .lb-close{
+    position:fixed; top:1rem; right:1rem; z-index:1001;
+    width:2.4rem; height:2.4rem; border:1px solid rgba(255,255,255,.25);
+    border-radius:999px; background:rgba(255,255,255,.12); color:#f5f5f4;
+    font-size:1.1rem; line-height:1; cursor:pointer;
+  }
+  #lightbox figure{margin:0; width:min(1400px, 240vw)}
+  #lightbox figcaption{color:#d6d3d1}
 
   /* ---------- Checklist ---------- */
   ul.checklist{list-style:none; padding-left:0}
@@ -578,7 +614,7 @@
     </div>
 
     <p><strong>Table de résolution des pointeurs dans l'asset :</strong></p>
-    <figure>
+    <figure class="zoomable">
       <svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Résolution des FPackageIndex vers la table Import Data">
         <defs>
           <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -652,7 +688,7 @@
       <li><code class="inline">.ucas</code> — Données binaires compressées.</li>
       <li><code class="inline">.pak</code> — Index de compatibilité.</li>
     </ol>
-    <figure>
+    <figure class="zoomable">
       <svg viewBox="0 0 880 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pipeline de compilation du mod">
         <defs>
           <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -935,7 +971,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.16 (mobile : noms de classes longs coupés proprement dans les listes, tableaux plus compacts)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.17 (schémas agrandissables en plein écran au clic 🔍, texte géant corrigé dans un tableau sur Safari mobile)</p>
   </footer>
 </div>
 
@@ -1013,7 +1049,7 @@
     </div>
 
     <p><strong>Pointer resolution table for this asset:</strong></p>
-    <figure>
+    <figure class="zoomable">
       <svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="FPackageIndex resolution to the Import Data table">
         <defs>
           <marker id="arrE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -1082,7 +1118,7 @@
       <li><code class="inline">.ucas</code> — Compressed binary data.</li>
       <li><code class="inline">.pak</code> — Compatibility index.</li>
     </ol>
-    <figure>
+    <figure class="zoomable">
       <svg viewBox="0 0 880 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mod compilation pipeline">
         <defs>
           <marker id="arr2E" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -1365,7 +1401,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.16 (mobile: long class names wrap cleanly in lists, more compact tables)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.17 (click-to-zoom fullscreen diagrams 🔍, Safari mobile giant-text table fixed)</p>
   </footer>
 </div>
 
@@ -1451,6 +1487,43 @@
   window.addEventListener('scroll', updateToc, {passive:true});
   window.addEventListener('load', updateToc);
   updateToc();
+
+  /* Zoom plein écran des schémas : au clic sur une figure « zoomable »,
+     son SVG est déplacé dans une superposition sombre, affiché en grand
+     et parcourable au doigt. Un clic n'importe où, le bouton ✕ ou la
+     touche Échap referme et remet le schéma à sa place d'origine. */
+  var lbOverlay = document.createElement('div');
+  lbOverlay.id = 'lightbox';
+  lbOverlay.setAttribute('role', 'dialog');
+  lbOverlay.setAttribute('aria-modal', 'true');
+  lbOverlay.innerHTML = '<button class="lb-close" aria-label="Fermer">✕</button>' +
+                        '<div class="lb-scroll"><figure></figure></div>';
+  document.body.appendChild(lbOverlay);
+  var lbHolder = lbOverlay.querySelector('figure');
+  var lbParent = null, lbNext = null;
+  function lbClose(){
+    var svg = lbHolder.querySelector('svg');
+    if (svg && lbParent){ lbParent.insertBefore(svg, lbNext); }
+    lbOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  lbOverlay.addEventListener('click', function(e){
+    if (e.target === lbOverlay || e.target.classList.contains('lb-scroll') || e.target.classList.contains('lb-close')) lbClose();
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') lbClose(); });
+  var zoomFigs = document.querySelectorAll('figure.zoomable');
+  for (var zi = 0; zi < zoomFigs.length; zi++){
+    (function(fig){
+      fig.addEventListener('click', function(){
+        var svg = fig.querySelector('svg');
+        if (!svg) return;
+        lbParent = svg.parentNode; lbNext = svg.nextSibling;
+        lbHolder.appendChild(svg);
+        lbOverlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    })(zoomFigs[zi]);
+  }
 </script>
 
 </body>
