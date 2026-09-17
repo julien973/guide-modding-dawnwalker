@@ -218,15 +218,31 @@
     h1, h2, h3{overflow-wrap:break-word}
     li, p, dd{overflow-wrap:break-word}
   }
+  /* Safari iOS « gonfle » parfois le texte des blocs plus larges que
+     l'écran (tableaux défilables) : on désactive cette inflation pour
+     que la taille du texte reste celle définie ci-dessus. */
+  html{-webkit-text-size-adjust:100%; text-size-adjust:100%}
+  th{
+    background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.02) 55%, rgba(0,0,0,.10)), var(--th-bg); color:var(--th-ink); text-align:left; padding:.65rem .8rem;
+    font-size:.75rem; text-transform:uppercase; letter-spacing:.06em;
+  }
+  td{padding:.6rem .8rem; border-top:1px solid var(--border); vertical-align:top; overflow-wrap:break-word}
+  tbody tr{transition:background .15s ease}
+  tbody tr:nth-child(even){background:var(--row-even)}
+  tbody tr:hover{background:var(--row-hover)}
+  td.mono, th.mono{font-family:Consolas, monospace; font-size:.83rem}
+  /* ⚠️ Les deux blocs @media ci-dessous doivent rester APRÈS les règles
+     de base td / th / td.mono ci-dessus : à spécificité égale, c'est la
+     dernière règle de la feuille qui gagne — placés avant, ils étaient
+     silencieusement écrasés (bug v2.16 → v2.19). */
   /* Mobile : tableaux défilables au doigt (gauche ↔ droite), comme un
      tableau BB-code. display:block transforme la table en conteneur de
      défilement ; les mots entiers (chemins, noms de classes) gardent
      leur largeur naturelle au lieu d'être compressés caractère par
      caractère. Réservé aux petits écrans : sur PC, display:block
      détachait le tableau de la largeur de sa carte et le faisait
-     déborder à droite. Repli impression : @media print garde la table
-     normale. Tableaux un peu plus compacts au passage (texte et
-     marges réduits) pour limiter la largeur à faire défiler. */
+     déborder à droite. Tableaux un peu plus compacts au passage (texte
+     et marges réduits) pour limiter la largeur à faire défiler. */
   @media screen and (max-width:720px){
     table{display:block; overflow-x:auto; -webkit-overflow-scrolling:touch}
     table{font-size:.8rem}
@@ -242,19 +258,6 @@
   @media screen and (min-width:721px), print{
     td{overflow-wrap:anywhere}
   }
-  /* Safari iOS « gonfle » parfois le texte des blocs plus larges que
-     l'écran (tableaux défilables) : on désactive cette inflation pour
-     que la taille du texte reste celle définie ci-dessus. */
-  html{-webkit-text-size-adjust:100%; text-size-adjust:100%}
-  th{
-    background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.02) 55%, rgba(0,0,0,.10)), var(--th-bg); color:var(--th-ink); text-align:left; padding:.65rem .8rem;
-    font-size:.75rem; text-transform:uppercase; letter-spacing:.06em;
-  }
-  td{padding:.6rem .8rem; border-top:1px solid var(--border); vertical-align:top; overflow-wrap:break-word}
-  tbody tr{transition:background .15s ease}
-  tbody tr:nth-child(even){background:var(--row-even)}
-  tbody tr:hover{background:var(--row-hover)}
-  td.mono, th.mono{font-family:Consolas, monospace; font-size:.83rem}
   .pill{
     display:inline-block; padding:.1rem .55rem; border-radius:999px;
     font-size:.78rem; font-weight:700; font-family:Consolas, monospace;
@@ -981,7 +984,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.19 (PC et PDF : les très longs chemins des tableaux techniques se replient au lieu de déborder de la carte)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.20 (PC : débordement vraiment corrigé — les règles responsive étaient silencieusement écrasées par les règles CSS de base)</p>
   </footer>
 </div>
 
@@ -1411,7 +1414,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.19 (desktop and PDF: very long paths in technical tables wrap instead of overflowing the card)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.20 (desktop: overflow actually fixed — responsive rules were silently overridden by later base CSS rules)</p>
   </footer>
 </div>
 
