@@ -212,21 +212,23 @@
 
   /* ---------- Tables ---------- */
   table{width:100%; border-collapse:collapse; margin:1.2rem 0; font-size:.9rem; background:var(--surface); border-radius:var(--radius-sm); overflow:hidden; border:1px solid var(--panel-border); box-shadow:var(--shadow-sm)}
+  /* Mots très longs (noms de classes UE, chemins) dans les titres, listes
+     et paragraphes : coupés à la ligne plutôt que de déborder de la carte. */
+  @media screen{
+    h1, h2, h3{overflow-wrap:break-word}
+    li, p, dd{overflow-wrap:break-word}
+  }
   /* Mobile : tableaux défilables au doigt (gauche ↔ droite), comme un
      tableau BB-code. display:block transforme la table en conteneur de
      défilement ; les mots entiers (chemins, noms de classes) gardent
      leur largeur naturelle au lieu d'être compressés caractère par
-     caractère. Repli impression : @media print rend la table normale. */
-  @media screen{
-    table{display:block; overflow-x:auto; -webkit-overflow-scrolling:touch}
-    h1, h2, h3{overflow-wrap:break-word}
-    /* Mots très longs (noms de classes UE, chemins) dans les listes et
-       paragraphes : coupés à la ligne plutôt que de déborder de la carte. */
-    li, p, dd{overflow-wrap:break-word}
-  }
-  /* Mobile : tableaux un peu plus compacts (texte et marges réduits),
-     ce qui réduit aussi la largeur à faire défiler au doigt. */
+     caractère. Réservé aux petits écrans : sur PC, display:block
+     détachait le tableau de la largeur de sa carte et le faisait
+     déborder à droite. Repli impression : @media print garde la table
+     normale. Tableaux un peu plus compacts au passage (texte et
+     marges réduits) pour limiter la largeur à faire défiler. */
   @media screen and (max-width:720px){
+    table{display:block; overflow-x:auto; -webkit-overflow-scrolling:touch}
     table{font-size:.8rem}
     td{padding:.5rem .6rem}
     th{padding:.5rem .6rem}
@@ -971,7 +973,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.17 (schémas agrandissables en plein écran au clic 🔍, texte géant corrigé dans un tableau sur Safari mobile)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.18 (PC : le tableau récapitulatif ne déborde plus de sa carte — défilement au doigt réservé au mobile)</p>
   </footer>
 </div>
 
@@ -1401,7 +1403,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.17 (click-to-zoom fullscreen diagrams 🔍, Safari mobile giant-text table fixed)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.18 (desktop: summary table no longer overflows its card — swipe scrolling now mobile-only)</p>
   </footer>
 </div>
 
