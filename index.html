@@ -234,6 +234,14 @@
     th{padding:.5rem .6rem}
     td.mono, th.mono{font-size:.74rem}
   }
+  /* PC et impression : dans les cellules, les jetons très longs (chemins
+     /Game/…, noms de classes) se replient à la ligne pour que le tableau
+     reste dans sa carte — un tableau ne descend jamais sous sa largeur
+     minimale, et « anywhere » est ce qui la réduit. Sur mobile on garde
+     le défilement au doigt avec des colonnes intactes. */
+  @media screen and (min-width:721px), print{
+    td{overflow-wrap:anywhere}
+  }
   /* Safari iOS « gonfle » parfois le texte des blocs plus larges que
      l'écran (tableaux défilables) : on désactive cette inflation pour
      que la taille du texte reste celle définie ci-dessus. */
@@ -973,7 +981,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.18 (PC : le tableau récapitulatif ne déborde plus de sa carte — défilement au doigt réservé au mobile)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.19 (PC et PDF : les très longs chemins des tableaux techniques se replient au lieu de déborder de la carte)</p>
   </footer>
 </div>
 
@@ -1403,7 +1411,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.18 (desktop: summary table no longer overflows its card — swipe scrolling now mobile-only)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.19 (desktop and PDF: very long paths in technical tables wrap instead of overflowing the card)</p>
   </footer>
 </div>
 
