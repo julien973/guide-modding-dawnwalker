@@ -98,7 +98,7 @@
   .brand{display:flex; align-items:center; gap:.6rem; font-weight:700; font-size:.95rem}
   .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:var(--dot-glow);display:inline-block}
   .brand small{color:var(--muted); font-weight:500}
-  .actions{display:flex; align-items:center; gap:.5rem}
+  .actions{display:flex; align-items:center; gap:.5rem; flex-wrap:wrap}
   .btn{
     border:1px solid var(--border-strong); background:var(--surface); color:var(--ink);
     padding:.35rem .8rem; border-radius:999px; font-size:.85rem; font-weight:600;
@@ -204,7 +204,7 @@
   .formula{
     /* Design riche : bordure dégradée (fond sombre plein + liseré gradient) */
     background:linear-gradient(var(--code-bg), var(--code-bg)) padding-box, var(--grad-accent) border-box;
-    border:1px solid transparent; color:var(--code-ink); border-radius:var(--radius-sm);
+    border:1px solid transparent; color:var(--code-ink); border-radius:var(--radius-sm); overflow-x:auto;
     padding:1rem 1.4rem; text-align:center; font-family:Consolas, monospace;
     font-size:1.05rem; margin:1.2rem 0; letter-spacing:.02em; box-shadow:var(--shadow-sm);
   }
@@ -212,11 +212,20 @@
 
   /* ---------- Tables ---------- */
   table{width:100%; border-collapse:collapse; margin:1.2rem 0; font-size:.9rem; background:var(--surface); border-radius:var(--radius-sm); overflow:hidden; border:1px solid var(--panel-border); box-shadow:var(--shadow-sm)}
+  /* Mobile : tableaux défilables au doigt (gauche ↔ droite), comme un
+     tableau BB-code. display:block transforme la table en conteneur de
+     défilement ; les mots entiers (chemins, noms de classes) gardent
+     leur largeur naturelle au lieu d'être compressés caractère par
+     caractère. Repli impression : @media print rend la table normale. */
+  @media screen{
+    table{display:block; overflow-x:auto; -webkit-overflow-scrolling:touch}
+    h1, h2, h3{overflow-wrap:break-word}
+  }
   th{
     background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.02) 55%, rgba(0,0,0,.10)), var(--th-bg); color:var(--th-ink); text-align:left; padding:.65rem .8rem;
     font-size:.75rem; text-transform:uppercase; letter-spacing:.06em;
   }
-  td{padding:.6rem .8rem; border-top:1px solid var(--border); vertical-align:top; overflow-wrap:anywhere; word-break:break-word}
+  td{padding:.6rem .8rem; border-top:1px solid var(--border); vertical-align:top; overflow-wrap:break-word}
   tbody tr{transition:background .15s ease}
   tbody tr:nth-child(even){background:var(--row-even)}
   tbody tr:hover{background:var(--row-hover)}
@@ -915,7 +924,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.14 (drapeaux FR/EN dans le sélecteur de langue)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.15 (mobile : tableaux défilables au doigt, colonnes intactes, boutons de la barre réorganisés)</p>
   </footer>
 </div>
 
@@ -1345,7 +1354,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.14 (FR/EN flags in the language switch)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.15 (mobile: swipeable tables, intact columns, wrapped topbar buttons)</p>
   </footer>
 </div>
 
