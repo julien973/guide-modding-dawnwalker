@@ -111,7 +111,9 @@
   .lang-switch button{
     border:none; background:transparent; padding:.35rem .85rem; font-size:.85rem;
     font-weight:700; cursor:pointer; color:var(--muted); font-family:inherit;
+    display:inline-flex; align-items:center; gap:.45rem;
   }
+  .flag{width:18px; height:12px; border-radius:2px; flex:0 0 auto; display:inline-block; box-shadow:0 0 0 1px rgba(0,0,0,.18)}
   .lang-switch button.active{background:var(--grad-accent); color:#fff}
   .btn-primary{background:var(--grad-accent); border-color:transparent; color:#fff}
   .btn-primary:hover{filter:brightness(1.12); color:#fff; box-shadow:0 4px 16px rgba(0,0,0,.22)}
@@ -472,8 +474,8 @@
   <div class="actions">
     <button class="btn" id="btn-theme" title="Thème jour / nuit">🌙</button>
     <div class="lang-switch">
-      <button id="btn-fr" class="active">FR</button>
-      <button id="btn-en">EN</button>
+      <button id="btn-fr" class="active"><svg class="flag" viewBox="0 0 3 2" aria-hidden="true"><rect width="1" height="2" fill="#0055A4"/><rect x="1" width="1" height="2" fill="#ffffff"/><rect x="2" width="1" height="2" fill="#EF4135"/></svg>FR</button>
+      <button id="btn-en"><svg class="flag" viewBox="0 0 60 30" aria-hidden="true"><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#ffffff" stroke-width="6"/><path d="M30,0 V30 M0,15 H60" stroke="#ffffff" stroke-width="10"/><path d="M30,0 V30 M0,15 H60" stroke="#C8102E" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="3.5"/></svg>EN</button>
     </div>
     <button class="btn btn-primary" id="btn-print" data-fr="Imprimer · PDF" data-en="Print · PDF">Imprimer · PDF</button>
   </div>
@@ -913,7 +915,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.13 (design riche : filets, boutons, en-têtes et liserés dégradés)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.14 (drapeaux FR/EN dans le sélecteur de langue)</p>
   </footer>
 </div>
 
@@ -1343,7 +1345,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.13 (rich design: gradient rules, buttons, headers and trim)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.14 (FR/EN flags in the language switch)</p>
   </footer>
 </div>
 
