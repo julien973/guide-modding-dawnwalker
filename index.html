@@ -220,6 +220,17 @@
   @media screen{
     table{display:block; overflow-x:auto; -webkit-overflow-scrolling:touch}
     h1, h2, h3{overflow-wrap:break-word}
+    /* Mots très longs (noms de classes UE, chemins) dans les listes et
+       paragraphes : coupés à la ligne plutôt que de déborder de la carte. */
+    li, p, dd{overflow-wrap:break-word}
+  }
+  /* Mobile : tableaux un peu plus compacts (texte et marges réduits),
+     ce qui réduit aussi la largeur à faire défiler au doigt. */
+  @media screen and (max-width:720px){
+    table{font-size:.8rem}
+    td{padding:.5rem .6rem}
+    th{padding:.5rem .6rem}
+    td.mono, th.mono{font-size:.74rem}
   }
   th{
     background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.02) 55%, rgba(0,0,0,.10)), var(--th-bg); color:var(--th-ink); text-align:left; padding:.65rem .8rem;
@@ -924,7 +935,7 @@
   </section>
 
   <footer class="site">
-    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.15 (mobile : tableaux défilables au doigt, colonnes intactes, boutons de la barre réorganisés)</p>
+    <p>Guide de référence — Modding d'arme · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Version bilingue FR/EN · v2.16 (mobile : noms de classes longs coupés proprement dans les listes, tableaux plus compacts)</p>
   </footer>
 </div>
 
@@ -1354,7 +1365,7 @@
   </section>
 
   <footer class="site">
-    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.15 (mobile: swipeable tables, intact columns, wrapped topbar buttons)</p>
+    <p>Reference guide — Weapon modding · The Blood of Dawnwalker (UE 5.5, IoStore/Zen) · Bilingual FR/EN edition · v2.16 (mobile: long class names wrap cleanly in lists, more compact tables)</p>
   </footer>
 </div>
 
